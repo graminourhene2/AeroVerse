@@ -1,0 +1,82 @@
+name: AeroVerse CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # ── Backend Tests ──────────────────────────────────
+  backend-tests:
+    name: 🐍 Backend (Flask) Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/backend
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-flask
+
+      - name: Run tests
+        run: pytest tests/ -v
+        env:
+          FLASK_ENV: testing
+          DATABASE_URL: sqlite:///test.db
+          SECRET_KEY: test-secret-key
+
+  # ── Frontend Tests ─────────────────────────────────
+  frontend-tests:
+    name: ⚛️ Frontend (React) Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/frontend
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: app/frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+  # ── Computer Vision Tests ──────────────────────────
+  cv-tests:
+    name: 🔬 Computer Vision Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: computer-vision
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests/ -v
