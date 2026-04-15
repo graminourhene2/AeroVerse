@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { createElement } from "react";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { Authentication } from "./pages/Authentication";
@@ -8,51 +9,28 @@ import { BuilderNew } from "./pages/BuilderNew";
 import { EducationNew } from "./pages/EducationNew";
 import { AITutorNew } from "./pages/AITutorNew";
 import { NotFound } from "./pages/NotFound";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+
+function protect(Component: React.ComponentType) {
+  return function ProtectedPage() {
+    return createElement(ProtectedRoute, null, createElement(Component));
+  };
+}
 
 export const router = createBrowserRouter([
-  // Access Layer
-  {
-    path: "/",
-    Component: Home,
-  },
-  {
-    path: "/about",
-    Component: About,
-  },
-  {
-    path: "/authentication",
-    Component: Authentication,
-  },
-  {
-    path: "/auth",
-    Component: Authentication,
-  },
-  {
-    path: "/profile",
-    Component: UserProfile,
-  },
-  
-  // Main Modules
-  {
-    path: "/simulation",
-    Component: SpaceSimulationNew,
-  },
-  {
-    path: "/builder",
-    Component: BuilderNew,
-  },
-  {
-    path: "/education",
-    Component: EducationNew,
-  },
-  {
-    path: "/ai-tutor",
-    Component: AITutorNew,
-  },
+  // Public pages
+  { path: "/",            Component: Home },
+  { path: "/about",       Component: About },
+  { path: "/authentication", Component: Authentication },
+  { path: "/auth",        Component: Authentication },
 
-  // 404 Fallback
-  {
-    path: "*",
-    Component: NotFound,
-  },
+  // Protected pages — require sign-in
+  { path: "/profile",     Component: protect(UserProfile) },
+  { path: "/simulation",  Component: protect(SpaceSimulationNew) },
+  { path: "/builder",     Component: protect(BuilderNew) },
+  { path: "/education",   Component: protect(EducationNew) },
+  { path: "/ai-tutor",    Component: protect(AITutorNew) },
+
+  // 404
+  { path: "*", Component: NotFound },
 ]);

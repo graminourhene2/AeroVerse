@@ -90,10 +90,10 @@ export const api = {
     }),
 
   // ========== CHAT / TUTEUR IA ==========
-  sendMessage: (message) =>
+  sendMessage: (message, history = []) =>
     fetchAPI("/chat/", {
       method: "POST",
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, history }),
     }),
 
   getChatHistory: () =>
@@ -142,10 +142,4 @@ export const api = {
   isAuthenticated: () => !!localStorage.getItem("token"),
 
   getToken: () => localStorage.getItem("token"),
-  sendMessage: (message, history = []) =>
-    fetch("http://127.0.0.1:5000/api/chat/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message, history }),
-    }).then((r) => r.json()),
 };

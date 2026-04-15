@@ -17,15 +17,17 @@ export function Footer() {
           {/* Brand & Description */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50 hover:scale-110 transition-transform">
-                <Rocket className="w-6 h-6 text-white" />
-              </div>
+              <img 
+                src="/images/Blue and Red Illustrative Rocket Launch Logo.png" 
+                alt="AeroVerse Logo" 
+                className="h-12 w-auto hover:scale-110 transition-transform"
+              />
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                 AeroVerse
               </span>
             </div>
             <p className="text-purple-300/70 max-w-sm mb-6 leading-relaxed">
-              🚀 Transformez votre compréhension de l'aérospatiale à travers des simulations immersives, une éducation interactive, et des outils d'IA avancés.
+              Transform your understanding of aerospace through immersive simulations, interactive education, and advanced AI tools.
             </p>
             <div className="flex items-center gap-3">
               <div className="flex gap-2">

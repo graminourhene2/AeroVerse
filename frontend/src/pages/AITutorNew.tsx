@@ -2,7 +2,7 @@ import { Navigation } from "../Navigation";
 import { Card } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { MessageCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { api } from "../api";
 
 export function AITutorNew() {
@@ -11,29 +11,37 @@ export function AITutorNew() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = async () => {
-    if (input.trim()) {
-      const userMessage = input.trim();
-      setMessages([...messages, { id: messages.length + 1, text: userMessage, sender: "user" }]);
-      setInput("");
-      setIsLoading(true);
+    if (!input.trim() || isLoading) return;
 
-      try {
-        const res = await api.sendMessage(userMessage);
-        const reply = res?.reply || "Sorry, I couldn't get a response from the AI.";
-        setMessages(prev => [...prev, { 
-          id: prev.length + 1, 
-          text: reply, 
-          sender: "bot" 
-        }]);
-      } catch (error) {
-        setMessages(prev => [...prev, { 
-          id: prev.length + 1, 
-          text: "Sorry, there was an error contacting the AI.", 
-          sender: "bot" 
-        }]);
+    const userMessage = input.trim();
+    const currentMessages = messages;
+    setMessages(prev => [...prev, { id: prev.length + 1, text: userMessage, sender: "user" }]);
+    setInput("");
+    setIsLoading(true);
+
+    try {
+      const history = currentMessages
+        .filter(m => m.sender !== "bot" || m.id !== 1)
+        .map(m => ({ role: m.sender === "user" ? "user" : "assistant", content: m.text }));
+
+      const res = await api.sendMessage(userMessage, history);
+
+      if (res?.reply) {
+        setMessages(prev => [...prev, { id: prev.length + 1, text: res.reply, sender: "bot" }]);
+      } else {
+        const errorText = res?.error || "Unable to reach the AI tutor. Make sure the backend is running.";
+        setMessages(prev => [...prev, { id: prev.length + 1, text: errorText, sender: "bot" }]);
       }
+    } catch (err) {
+      setMessages(prev => [...prev, { id: prev.length + 1, text: "Connection error. Please start the backend server.", sender: "bot" }]);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -70,7 +78,7 @@ export function AITutorNew() {
           {/* Header */}
           <div className="mb-8 text-center">
             <div className="inline-block mb-6 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10">
-              <p className="text-sm font-semibold text-emerald-300">🤖 AI-Powered Learning</p>
+              <p className="text-sm font-semibold text-emerald-300">AI-Powered Learning</p>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-emerald-200 via-teal-200 to-green-200 bg-clip-text text-transparent leading-tight">
@@ -89,7 +97,7 @@ export function AITutorNew() {
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-2xl px-6 py-4 rounded-xl text-base leading-relaxed ${
+                    className={`max-w-2xl px-6 py-4 rounded-xl text-base leading-relaxed whitespace-pre-line ${
                       msg.sender === "user"
                         ? "bg-emerald-600 text-white rounded-br-none shadow-lg shadow-emerald-500/20"
                         : "bg-emerald-900/50 text-emerald-50 border border-emerald-500/40 rounded-bl-none shadow-lg shadow-teal-500/10"
@@ -108,6 +116,7 @@ export function AITutorNew() {
                   </div>
                 </div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
@@ -135,19 +144,19 @@ export function AITutorNew() {
             <Card className="bg-gradient-to-br from-emerald-900/30 to-emerald-800/20 border border-emerald-500/30 p-6 hover:border-emerald-500/60 transition-all hover:shadow-lg hover:shadow-emerald-500/20">
               <h3 className="text-lg font-bold text-white mb-3">Available Features</h3>
               <ul className="space-y-2 text-emerald-200/70 text-sm">
-                <li>✓ Real-time AI responses</li>
-                <li>✓ Multilingual support</li>
-                <li>✓ Aerospace Q&A</li>
-                <li>✓ Study recommendations</li>
+                <li>Real-time AI responses</li>
+                <li>Multilingual support</li>
+                <li>Aerospace Q&A</li>
+                <li>Study recommendations</li>
               </ul>
             </Card>
 
             <Card className="bg-gradient-to-br from-teal-900/30 to-green-900/20 border border-teal-500/30 p-6 hover:border-teal-500/60 transition-all hover:shadow-lg hover:shadow-teal-500/20">
               <h3 className="text-lg font-bold text-white mb-3">How to Use</h3>
               <ul className="space-y-2 text-teal-200/70 text-sm">
-                <li>• Type your aerospace question</li>
-                <li>• Get AI-powered answers instantly</li>
-                <li>• Ask follow-up questions</li>
+                <li>Type your aerospace question</li>
+                <li>Get AI-powered answers instantly</li>
+                <li>Ask follow-up questions</li>
                 <li>• Explore learning paths</li>
               </ul>
             </Card>

@@ -58,7 +58,7 @@ export function About() {
           {/* Header */}
           <div className="text-center mb-16 mt-8">
             <div className="inline-block mb-6 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm">
-              <p className="text-sm font-semibold text-purple-300">👥 About AeroVerse</p>
+              <p className="text-sm font-semibold text-purple-300">About AeroVerse</p>
             </div>
 
             <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent leading-tight">
@@ -134,8 +134,7 @@ export function About() {
 
                   <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
                   <p className="text-purple-300 font-semibold mb-2">{member.role}</p>
-                  <p className="text-sm text-white/50 mb-4">{member.school}</p>
-                  <p className="text-purple-200/70">{member.description}</p>
+                  <p className="text-sm text-white/50">{member.school}</p>
                 </Card>
               ))}
             </div>
