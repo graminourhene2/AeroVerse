@@ -18,7 +18,7 @@ def create_app():
     db.init_app(app)
     
     JWTManager(app)
-    CORS(app, origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000"])
+    CORS(app, origins="*")
 
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
@@ -37,5 +37,8 @@ def create_app():
     
     from app.routes.quiz import quiz_bp
     app.register_blueprint(quiz_bp, url_prefix="/api/quiz")
+
+    from app.routes.admin import admin_bp
+    app.register_blueprint(admin_bp, url_prefix="/api/admin")
 
     return app

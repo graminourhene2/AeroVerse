@@ -9,6 +9,7 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     try:
         data = request.get_json()
+        print(f"📝 Register attempt: {data}")
         
         # Validation
         if not data or not data.get('email') or not data.get('password'):
@@ -30,14 +31,16 @@ def register():
         user = User(
             email=data['email'],
             password=hashed,
-            username=data.get('username', 'User')
+            username=data.get('username', data['email'].split('@')[0])
         )
         db.session.add(user)
         db.session.commit()
-        return jsonify({"message": "Account created successfully"}), 201
+        print(f"✅ User created: {user.email}")
+        return jsonify({"message": "Account created successfully", "user_id": user.id}), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": "Unable to create account. Please try again."}), 500
+        print(f"❌ Register error: {str(e)}")
+        return jsonify({"error": f"Unable to create account: {str(e)}"}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
