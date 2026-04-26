@@ -1,19 +1,14 @@
 import { Navigation } from "../Navigation";
+import { Footer } from "../Footer";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Link } from "react-router-dom";
-import { 
-  Sparkles, 
-  Wrench, 
-  GraduationCap, 
-  Bot, 
+import {
+  Sparkles,
+  Wrench,
   ArrowRight,
-  Zap,
   BookOpen,
-  Users,
-  Star,
-  Rocket,
-  MessageCircle
+  Bot
 } from "lucide-react";
 
 export function Home() {
@@ -49,7 +44,7 @@ export function Home() {
       id: 4,
       title: "AI Tutor",
       description: "Intelligent assistant for personalized aerospace learning and real-time guidance",
-      icon: MessageCircle,
+      icon: Bot,
       color: "from-emerald-500 to-teal-500",
       path: "/ai-tutor",
       stats: "24/7 Support",
@@ -96,29 +91,25 @@ export function Home() {
       {/* Content */}
       <div className="relative z-10 pt-20 px-6 pb-12">
         <div className="max-w-7xl mx-auto">
-          {/* Hero Section */}
+          {/* Hero Section - with Logo */}
           <div className="text-center mb-16 mt-8">
-            <div className="inline-block mb-6 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm">
-              <p className="text-sm font-semibold text-purple-300">✨ Welcome to AeroVerse</p>
-            </div>
-
             <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent leading-tight">
-              AeroVerse
+              Aerospace Learning Platform
             </h1>
 
             <p className="text-lg md:text-xl text-purple-200/70 max-w-2xl mx-auto mb-8">
-              Immersive learning environment combining advanced simulation, AI tutoring, and interactive education for aerospace enthusiasts
+              Professional environment combining advanced simulation, AI tutoring, and interactive education for aerospace professionals and students
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/authentication">
                 <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-6 text-lg rounded-lg group font-semibold">
-                  🚀 Sign In for AeroVerse <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  Get Started <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/ai-tutor">
                 <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg rounded-lg">
-                  Try AeroVerse AI Tutor for Free →
+                  Try AI Tutor →
                 </Button>
               </Link>
             </div>
@@ -144,38 +135,40 @@ export function Home() {
             ))}
           </div>
 
-          {/* Modules Grid */}
+          {/* Modules Carousel */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-white mb-10 text-center">Main Modules</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {modules.map((module) => {
-                const Icon = module.icon;
-                return (
-                  <Link key={module.id} to={module.path}>
-                    <Card className="group bg-gradient-to-br from-white/5 to-white/10 border border-white/10 backdrop-blur-xl p-8 hover:border-white/30 hover:bg-white/20 transition-all h-full cursor-pointer overflow-hidden">
-                      {/* Gradient background on hover */}
-                      <div className={`absolute -inset-full bg-gradient-to-r ${module.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 blur-3xl`} />
+            <div className="overflow-hidden">
+              <div className="flex gap-6 animate-scroll">
+                {[...modules, ...modules].map((module, idx) => {
+                  const Icon = module.icon;
+                  return (
+                    <Link key={idx} to={module.path} className="flex-shrink-0 w-[450px]">
+                      <Card className="group bg-gradient-to-br from-white/5 to-white/10 border border-white/10 backdrop-blur-xl p-8 hover:border-white/30 hover:bg-white/20 transition-all h-full cursor-pointer overflow-hidden">
+                        {/* Gradient background on hover */}
+                        <div className={`absolute -inset-full bg-gradient-to-r ${module.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 blur-3xl`} />
 
-                      <div className="relative">
-                        <div className={`inline-flex p-3 rounded-lg bg-gradient-to-r ${module.color} mb-4 group-hover:scale-110 transition-transform`}>
-                          <Icon className="w-6 h-6 text-white" />
+                        <div className="relative">
+                          <div className={`inline-flex p-3 rounded-lg bg-gradient-to-r ${module.color} mb-4 group-hover:scale-110 transition-transform`}>
+                            <Icon className="w-6 h-6 text-white" />
+                          </div>
+
+                          <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${module.color} group-hover:bg-clip-text transition-all">
+                            {module.title}
+                          </h3>
+
+                          <p className="text-white/60 mb-6">{module.description}</p>
+
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-semibold text-white/40">{module.stats}</span>
+                            <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-2 transition-all" />
+                          </div>
                         </div>
-
-                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${module.color} group-hover:bg-clip-text transition-all">
-                          {module.title}
-                        </h3>
-
-                        <p className="text-white/60 mb-6">{module.description}</p>
-
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-semibold text-white/40">{module.stats}</span>
-                          <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-white/80 group-hover:translate-x-2 transition-all" />
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                );
-              })}
+                      </Card>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
@@ -193,7 +186,7 @@ export function Home() {
 
               <Card className="bg-gradient-to-br from-purple-900/30 to-purple-800/20 border border-purple-500/30 p-8 hover:border-purple-500/60 hover:shadow-lg hover:shadow-purple-500/20 transition-all">
                 <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4">
-                  <MessageCircle className="w-6 h-6 text-purple-400" />
+                  <Bot className="w-6 h-6 text-purple-400" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">AI-Powered Learning</h3>
                 <p className="text-purple-200/70">Personalized assistance from intelligent tutoring system</p>
@@ -234,6 +227,7 @@ export function Home() {
           animation: twinkle 3s ease-in-out infinite;
         }
       `}</style>
+      <Footer />
     </div>
   );
 }

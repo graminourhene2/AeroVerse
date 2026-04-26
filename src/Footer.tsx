@@ -1,4 +1,4 @@
-import { Rocket, Github, Twitter, Linkedin, Mail, Heart, Code2, Zap } from "lucide-react";
+import { Github, Twitter, Linkedin, Mail, Code2, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function Footer() {
@@ -16,29 +16,22 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
           {/* Brand & Description */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/50 hover:scale-110 transition-transform">
-                <Rocket className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                AeroVerse
-              </span>
-            </div>
+            <h3 className="text-2xl font-bold text-purple-100 mb-4">
+              OrbitalHub
+            </h3>
             <p className="text-purple-300/70 max-w-sm mb-6 leading-relaxed">
-              🚀 Transformez votre compréhension de l'aérospatiale à travers des simulations immersives, une éducation interactive, et des outils d'IA avancés.
+              Professional aerospace education platform with advanced simulation, interactive education, and AI-powered learning tools for aerospace professionals and enthusiasts.
             </p>
-            <div className="flex items-center gap-3">
-              <div className="flex gap-2">
-                <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
-                  <Github className="w-5 h-5 text-purple-300" />
-                </a>
-                <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
-                  <Twitter className="w-5 h-5 text-purple-300" />
-                </a>
-                <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
-                  <Linkedin className="w-5 h-5 text-purple-300" />
-                </a>
-              </div>
+            <div className="flex gap-2">
+              <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
+                <Github className="w-5 h-5 text-purple-300" />
+              </a>
+              <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
+                <Twitter className="w-5 h-5 text-purple-300" />
+              </a>
+              <a href="#" className="p-2 bg-purple-500/10 hover:bg-purple-500/30 rounded-lg transition-all hover:scale-110">
+                <Linkedin className="w-5 h-5 text-purple-300" />
+              </a>
             </div>
           </div>
 
@@ -51,16 +44,16 @@ export function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "Simulation", path: "/simulation" },
-                { label: "Builder", path: "/builder" },
-                { label: "Education", path: "/education" },
-                { label: "AI Tutor", path: "/ai-tutor" },
+                { label: "Builder",    path: "/builder" },
+                { label: "Education",  path: "/education" },
+                { label: "AI Tutor",   path: "/ai-tutor" },
               ].map((item) => (
                 <li key={item.path}>
                   <Link
                     to={item.path}
                     className="text-purple-300/70 hover:text-purple-200 hover:translate-x-1 transition-all inline-block"
                   >
-                    → {item.label}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -71,27 +64,22 @@ export function Footer() {
           <div>
             <h4 className="font-bold text-purple-100 mb-5 flex items-center gap-2">
               <Code2 className="w-4 h-4 text-blue-400" />
-              Ressources
+              Resources
             </h4>
             <ul className="space-y-3">
               <li>
                 <Link to="/about" className="text-purple-300/70 hover:text-purple-200 hover:translate-x-1 transition-all inline-block">
-                  → À propos
+                  About
                 </Link>
               </li>
               <li>
                 <a href="#" className="text-purple-300/70 hover:text-purple-200 hover:translate-x-1 transition-all inline-block">
-                  → Documentation
+                  Documentation
                 </a>
               </li>
               <li>
                 <a href="#" className="text-purple-300/70 hover:text-purple-200 hover:translate-x-1 transition-all inline-block">
-                  → API Docs
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-purple-300/70 hover:text-purple-200 hover:translate-x-1 transition-all inline-block">
-                  → Support
+                  Support
                 </a>
               </li>
             </ul>
@@ -104,7 +92,7 @@ export function Footer() {
               Newsletter
             </h4>
             <p className="text-purple-300/70 text-sm mb-3">
-              Restez informé des nouveaux modules et mises à jour.
+              Stay informed about new modules and updates.
             </p>
             <div className="flex">
               <input
@@ -112,8 +100,8 @@ export function Footer() {
                 placeholder="your@email.com"
                 className="flex-1 px-3 py-2 bg-purple-900/30 border border-purple-500/30 rounded-l-lg text-sm text-purple-100 placeholder:text-purple-400/50 focus:outline-none focus:border-purple-500/60"
               />
-              <button className="px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-r-lg text-white transition-all">
-                →
+              <button className="px-3 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-r-lg text-white transition-all text-sm font-semibold">
+                Join
               </button>
             </div>
           </div>
@@ -125,90 +113,14 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-purple-300/70 text-sm flex items-center gap-2">
-            <span>© {currentYear} AeroVerse.</span>
-            <span>Fait avec</span>
-            <Heart className="w-4 h-4 text-red-400 animate-pulse" />
-            <span>pour l'éducation spatiale</span>
+            <span>© {currentYear} OrbitalHub. Professional aerospace education platform</span>
           </div>
           <div className="flex items-center gap-4 text-sm text-purple-300/70">
-            <a href="#" className="hover:text-purple-200 transition-colors">
-              Confidentialité
-            </a>
+            <a href="#" className="hover:text-purple-200 transition-colors">Privacy</a>
             <span>•</span>
-            <a href="#" className="hover:text-purple-200 transition-colors">
-              Conditions
-            </a>
+            <a href="#" className="hover:text-purple-200 transition-colors">Terms</a>
             <span>•</span>
-            <a href="#" className="hover:text-purple-200 transition-colors">
-              Cookies
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-      `}</style>
-    </footer>
-  );
-}
-            <h4 className="font-semibold text-purple-100 mb-4">Company</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-purple-300/70 hover:text-purple-200 transition-colors">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-purple-300/70 hover:text-purple-200 transition-colors">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-purple-300/70 hover:text-purple-200 transition-colors">
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-purple-300/70 hover:text-purple-200 transition-colors">
-                  Terms
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="pt-8 border-t border-purple-400/20 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-purple-300/60 text-sm">
-            © 2026 AeroVerse. All rights reserved.
-          </p>
-          
-          <div className="flex items-center gap-4">
-            <a 
-              href="#" 
-              className="w-10 h-10 rounded-lg border border-purple-400/20 bg-purple-500/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"
-            >
-              <Twitter className="w-4 h-4 text-purple-300" />
-            </a>
-            <a 
-              href="#" 
-              className="w-10 h-10 rounded-lg border border-purple-400/20 bg-purple-500/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"
-            >
-              <Github className="w-4 h-4 text-purple-300" />
-            </a>
-            <a 
-              href="#" 
-              className="w-10 h-10 rounded-lg border border-purple-400/20 bg-purple-500/10 flex items-center justify-center hover:bg-purple-500/20 transition-colors"
-            >
-              <Linkedin className="w-4 h-4 text-purple-300" />
-            </a>
+            <a href="#" className="hover:text-purple-200 transition-colors">Cookies</a>
           </div>
         </div>
       </div>

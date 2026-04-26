@@ -50,7 +50,7 @@ export function SpaceSimulationNew() {
           {/* Header with gradient text */}
           <div className="mb-12 text-center">
             <div className="inline-block mb-6 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10">
-              <p className="text-sm font-semibold text-cyan-300">🌌 Immersive 3D Experience</p>
+              <p className="text-sm font-semibold text-cyan-300">Immersive 3D Experience</p>
             </div>
             
             <h1 className="text-6xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight">
@@ -193,38 +193,7 @@ export function SpaceSimulationNew() {
             </Card>
           </div>
 
-          {/* Environments Showcase */}
-          <Card className="bg-gradient-to-r from-cyan-900/20 via-blue-900/20 to-purple-900/20 border border-cyan-500/20 p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Rocket className="w-6 h-6 text-cyan-400" />
-              <h2 className="text-2xl font-bold text-white">Available Environments</h2>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-4">
-              {[
-                { name: "Earth Orbit", desc: "International Space Station view", icon: "🌍" },
-                { name: "Mars Surface", desc: "Red planet exploration", icon: "🔴" },
-                { name: "Space Station", desc: "Immersive station tour", icon: "🛰️" },
-              ].map((env, i) => (
-                <button key={i} className="group p-4 rounded-lg border border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-500/50 transition-all">
-                  <div className="text-3xl mb-2">{env.icon}</div>
-                  <p className="font-semibold text-white group-hover:text-cyan-300 transition-colors">{env.name}</p>
-                  <p className="text-sm text-cyan-200/70">{env.desc}</p>
-                </button>
-              ))}
-            </div>
-          </Card>
 
-          {/* Unity Integration Info */}
-          <Card className="bg-gradient-to-br from-emerald-900/20 to-emerald-800/10 border border-emerald-500/30 p-6 mt-8">
-            <h3 className="text-lg font-bold text-white mb-3">📌 Ready for Unity Integration</h3>
-            <p className="text-emerald-200/70 text-sm mb-3">
-              This environment is fully prepared for seamless Unity WebGL integration. Simply add your build files and configure the communication layer.
-            </p>
-            <a href="#" className="text-emerald-400 hover:text-emerald-300 text-sm font-semibold">
-              View Integration Guide →
-            </a>
-          </Card>
         </div>
       </div>
     </div>
