@@ -1,4 +1,5 @@
 import { Navigation } from "../Navigation";
+import { Footer } from "../Footer";
 import { Card } from "../components/ui/card";
 import { Users, Target, Lightbulb, Rocket } from "lucide-react";
 
@@ -22,7 +23,7 @@ export function About() {
       name: "Nourhene Grami",
       role: "Engineering Student",
       school: "ENSI - National School of Computer Science",
-      image: "/images/nourhene.jfif",
+      image: "/images/nourhene.jpeg",
       
     }
   ];
@@ -58,7 +59,7 @@ export function About() {
           {/* Header */}
           <div className="text-center mb-16 mt-8">
             <div className="inline-block mb-6 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm">
-              <p className="text-sm font-semibold text-purple-300">👥 About AeroVerse</p>
+              <p className="text-sm font-semibold text-purple-300">About AeroVerse</p>
             </div>
 
             <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent leading-tight">
@@ -134,8 +135,7 @@ export function About() {
 
                   <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
                   <p className="text-purple-300 font-semibold mb-2">{member.role}</p>
-                  <p className="text-sm text-white/50 mb-4">{member.school}</p>
-                  <p className="text-purple-200/70">{member.description}</p>
+                  <p className="text-sm text-white/50">{member.school}</p>
                 </Card>
               ))}
             </div>
@@ -160,6 +160,7 @@ export function About() {
           animation: twinkle 3s ease-in-out infinite;
         }
       `}</style>
+      <Footer />
     </div>
   );
 }

@@ -1,0 +1,53 @@
+besh thell el local host :npm run dev
+
+commande de nour : 
+cd "C:\Users\Nour Mrabet\Desktop\AeroVerse"
+git add .
+git commit -m "description de ce que tu as changé"
+git push
+
+cd AeroVerse
+git pull
+
+mtei ena
+ 
+cd D:\PCD\AeroVerse\computer-vision\backend
+venv\Scripts\activate
+python train_model.py
+
+python services\openai_service.py
+python services\cv_service.py
+python app.py
+    khalih yekhdem w hell PowerShell jdid :
+cd "D:\PCD\AeroVerse\frontend"
+npm run dev 
+ou : 
+
+# Dans un nouveau PowerShell
+$imagePath = "C:\Users\MSI\Desktop\PCD\backend\training_data\Mars\image_001.jpg"
+$imageBytes = [System.IO.File]::ReadAllBytes($imagePath)
+$base64Image = [System.Convert]::ToBase64String($imageBytes)
+
+$body = @{
+    image = $base64Image
+    format = "jpg"
+} | ConvertTo-Json
+
+$response = Invoke-RestMethod -Uri "http://localhost:5000/api/cv/analyze-image" -Method POST -ContentType "application/json" -Body $body
+
+Write-Host "Objet: $($response.component_name)"
+Write-Host "Catégorie: $($response.category)"
+Write-Host "Confiance: $([math]::Round($response.confidence * 100, 1))%"
+Write-Host "`nDescription:"
+Write-Host $response.description
+Write-Host "`nSpécifications:"
+$response.technical_specs | ForEach-Object { Write-Host "  - $_" }
+
+
+claude prompt : 
+in fact i have a problem in unity can we do the setup unity and try the computer vision on real unity project without unity ? we have the local host frontend and backend in fact my role is to integrate the computer vision part in the local host frontend and link it with the unity integration in it so that the user can go to the unity part and find a button or a 'capture d'ecran part of his unity work in the app itself' that image captured should be the image input of the computer vision that is going to diagnose the problem , the component and give the sollution and the breaked part of the unity components
+
+what's next?
+
+
+

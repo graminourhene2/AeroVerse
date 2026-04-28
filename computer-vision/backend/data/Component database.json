@@ -1,0 +1,272 @@
+{
+  "turbofan_engine": {
+    "name": "Turbofan Engine",
+    "category": "Engine",
+    "description": "A turbofan engine is a type of jet engine that uses a ducted fan to accelerate air around the engine core. It provides high thrust efficiency and is commonly used in commercial aviation. The bypass air provides additional thrust while reducing noise and improving fuel efficiency.",
+    "model_3d_reference": "models/turbofan_engine.obj",
+    "technical_specs": [
+      "Thrust: 20,000-25,000 lbf",
+      "Bypass ratio: 9:1",
+      "Fan diameter: 78 inches",
+      "Weight: 4,500 kg",
+      "Max temperature: 1,500°C"
+    ],
+    "educational_content": {
+      "how_it_works": "The fan draws in air, part goes through the core (combustion) and part bypasses it, creating efficient thrust.",
+      "applications": [
+        "Commercial aviation",
+        "Military transport aircraft",
+        "Business jets"
+      ],
+      "key_principles": [
+        "Bernoulli's principle",
+        "Newton's third law",
+        "Thermodynamics"
+      ]
+    }
+  },
+  "rocket_engine": {
+    "name": "Rocket Engine",
+    "category": "Engine",
+    "description": "A rocket engine generates thrust through the expulsion of high-velocity exhaust gases. It operates on Newton's third law, producing thrust in the opposite direction of exhaust flow. Commonly uses liquid or solid propellants and is essential for space launch vehicles.",
+    "model_3d_reference": "models/rocket_engine.obj",
+    "technical_specs": [
+      "Thrust: 190,000 lbf",
+      "Specific impulse: 311s (sea level)",
+      "Propellant: LOX/RP-1",
+      "Burn time: 162 seconds",
+      "Gimbal range: ±10 degrees"
+    ],
+    "educational_content": {
+      "how_it_works": "Combustion of propellants creates high-pressure gas that is expelled through a nozzle at supersonic speeds.",
+      "applications": [
+        "Space launch vehicles",
+        "Missiles",
+        "Spacecraft propulsion"
+      ],
+      "key_principles": [
+        "Newton's third law",
+        "Conservation of momentum",
+        "Tsiolkovsky rocket equation"
+      ]
+    }
+  },
+  "wing": {
+    "name": "Aircraft Wing",
+    "category": "Structure",
+    "description": "An aircraft wing generates lift through its airfoil shape and pressure differential. Its curved upper surface creates lower pressure above and higher pressure below, producing upward force. Wings also house fuel tanks and control surfaces for flight stability.",
+    "model_3d_reference": "models/aircraft_wing.obj",
+    "technical_specs": [
+      "Wingspan: 35-60 meters (commercial)",
+      "Aspect ratio: 8-11",
+      "Wing area: 120-550 m²",
+      "Airfoil: NACA 23012 (example)",
+      "Material: Aluminum alloy / Carbon composite"
+    ],
+    "educational_content": {
+      "how_it_works": "Airfoil shape creates pressure difference - lower pressure above, higher below, resulting in net upward lift force.",
+      "applications": [
+        "Commercial aircraft",
+        "Military fighters",
+        "General aviation",
+        "Gliders"
+      ],
+      "key_principles": [
+        "Bernoulli's principle",
+        "Angle of attack",
+        "Lift coefficient"
+      ]
+    }
+  },
+  "satellite": {
+    "name": "Communication Satellite",
+    "category": "Spacecraft",
+    "description": "A satellite placed in orbit around Earth or another celestial body for telecommunications, broadcasting, and data relay. It performs various functions including communications, navigation, Earth observation, and scientific research.",
+    "model_3d_reference": "models/satellite_basic.obj",
+    "technical_specs": [
+      "Orbit: Geostationary (35,786 km)",
+      "Power: Solar panels (5-15 kW)",
+      "Mass: 3,000-6,000 kg",
+      "Lifespan: 15-20 years",
+      "Transponders: 24-72 channels"
+    ],
+    "educational_content": {
+      "how_it_works": "Receives signals from Earth stations, amplifies them, and retransmits to different locations on Earth's surface.",
+      "applications": [
+        "TV broadcasting",
+        "Internet services",
+        "GPS navigation",
+        "Military communications",
+        "Weather monitoring"
+      ],
+      "key_principles": [
+        "Orbital mechanics",
+        "Radio frequency transmission",
+        "Solar power generation"
+      ]
+    }
+  },
+  "turbine_blade": {
+    "name": "Turbine Blade",
+    "category": "Propulsion",
+    "description": "A turbine blade extracts energy from high-temperature gas flow in jet engines. These precision-engineered components must withstand extreme temperatures and rotational forces while efficiently converting thermal energy to mechanical rotation.",
+    "model_3d_reference": "models/turbine_blade.obj",
+    "technical_specs": [
+      "Material: Nickel-based superalloy",
+      "Operating temperature: 1,400-1,700°C",
+      "Length: 10-40 cm",
+      "Coating: Thermal barrier coating (TBC)",
+      "Cooling: Internal air channels"
+    ],
+    "educational_content": {
+      "how_it_works": "Hot exhaust gases from combustion spin the turbine blades, which drive the compressor and fan via a shaft.",
+      "applications": [
+        "Jet engines",
+        "Gas turbines",
+        "Power generation turbines"
+      ],
+      "key_principles": [
+        "Energy conversion",
+        "Thermodynamics",
+        "Material science",
+        "Heat transfer"
+      ]
+    }
+  },
+  "fuel_tank": {
+    "name": "Aerospace Fuel Tank",
+    "category": "Spacecraft",
+    "description": "Storage container for rocket propellant or aircraft fuel. Must maintain structural integrity under pressure while minimizing weight. Often insulated for cryogenic fuels and designed to prevent fuel sloshing during flight.",
+    "model_3d_reference": "models/fuel_tank.obj",
+    "technical_specs": [
+      "Capacity: 50-150 tons (rockets)",
+      "Material: Aluminum-lithium alloy",
+      "Pressure: 20-60 psi",
+      "Insulation: Foam for cryogenic fuels",
+      "Shape: Cylindrical with domed ends"
+    ],
+    "educational_content": {
+      "how_it_works": "Stores fuel under controlled pressure, with insulation for cryogenic liquids like liquid oxygen and liquid hydrogen.",
+      "applications": [
+        "Rocket stages",
+        "Aircraft wing tanks",
+        "Spacecraft fuel systems"
+      ],
+      "key_principles": [
+        "Pressure vessel design",
+        "Cryogenics",
+        "Structural integrity",
+        "Thermal insulation"
+      ]
+    }
+  },
+  "landing_gear": {
+    "name": "Landing Gear",
+    "category": "Structure",
+    "description": "Retractable wheels and shock absorbers for aircraft landing and takeoff. Consists of hydraulic struts, wheels, brakes, and retraction mechanisms. Designed to absorb landing impact and support aircraft weight on the ground.",
+    "model_3d_reference": "models/landing_gear.obj",
+    "technical_specs": [
+      "Load capacity: 50-200 tons",
+      "Tire pressure: 200 psi",
+      "Hydraulic system: 3000 psi",
+      "Retraction time: 5-10 seconds",
+      "Material: Steel, titanium alloys"
+    ],
+    "educational_content": {
+      "how_it_works": "Hydraulic shock struts absorb landing impact energy. Wheels support weight, and hydraulic systems retract gear to reduce drag in flight.",
+      "applications": [
+        "Commercial aircraft",
+        "Military aircraft",
+        "Helicopters",
+        "Space shuttle"
+      ],
+      "key_principles": [
+        "Hydraulic systems",
+        "Shock absorption",
+        "Mechanical engineering",
+        "Structural load distribution"
+      ]
+    }
+  },
+  "cockpit": {
+    "name": "Aircraft Cockpit",
+    "category": "Structure",
+    "description": "The pilot's control area containing instruments, displays, and flight controls. Modern cockpits feature glass displays, fly-by-wire systems, and integrated avionics for navigation, communication, and aircraft monitoring.",
+    "model_3d_reference": "models/cockpit.obj",
+    "technical_specs": [
+      "Displays: Glass cockpit (LCD screens)",
+      "Controls: Fly-by-wire system",
+      "Windows: Laminated acrylic",
+      "Pressurization: 8,000 ft cabin altitude",
+      "Avionics: GPS, autopilot, radar, TCAS"
+    ],
+    "educational_content": {
+      "how_it_works": "Pilots use integrated displays and controls to monitor aircraft systems and manage flight. Fly-by-wire converts control inputs to electronic signals.",
+      "applications": [
+        "Commercial aircraft",
+        "Military aircraft",
+        "Spacecraft",
+        "Flight simulators"
+      ],
+      "key_principles": [
+        "Human factors engineering",
+        "Avionics systems",
+        "Automation",
+        "Ergonomics"
+      ]
+    }
+  },
+  "propeller": {
+    "name": "Aircraft Propeller",
+    "category": "Propulsion",
+    "description": "A rotating blade assembly that converts engine power into thrust by accelerating air backward. Propellers are highly efficient at lower speeds and are used in general aviation and turboprop aircraft.",
+    "model_3d_reference": "models/propeller.obj",
+    "technical_specs": [
+      "Diameter: 2-4 meters (typical)",
+      "Blades: 2-6 blades",
+      "Material: Aluminum or composite",
+      "RPM: 1,500-2,700 rpm",
+      "Pitch: Variable or fixed"
+    ],
+    "educational_content": {
+      "how_it_works": "Propeller blades act as rotating wings, creating thrust by pushing air backward using their airfoil shape.",
+      "applications": [
+        "General aviation",
+        "Turboprop aircraft",
+        "Drones",
+        "Historic aircraft"
+      ],
+      "key_principles": [
+        "Lift generation",
+        "Angular momentum",
+        "Blade element theory"
+      ]
+    }
+  },
+  "tail_section": {
+    "name": "Aircraft Tail Section",
+    "category": "Structure",
+    "description": "The rear portion of an aircraft containing vertical and horizontal stabilizers for flight stability and control. Includes rudder and elevator control surfaces.",
+    "model_3d_reference": "models/tail_section.obj",
+    "technical_specs": [
+      "Vertical stabilizer height: 5-10 meters",
+      "Horizontal stabilizer span: 10-20 meters",
+      "Material: Aluminum or composite",
+      "Control surfaces: Rudder, elevator",
+      "Trim tabs: Adjustable control aids"
+    ],
+    "educational_content": {
+      "how_it_works": "Stabilizers provide aerodynamic stability. Rudder controls yaw (left-right), elevator controls pitch (up-down).",
+      "applications": [
+        "All fixed-wing aircraft",
+        "Conventional tail configuration",
+        "T-tail configuration"
+      ],
+      "key_principles": [
+        "Aerodynamic stability",
+        "Control surfaces",
+        "Center of gravity"
+      ]
+    }
+  }
+}

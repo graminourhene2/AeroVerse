@@ -1,0 +1,455 @@
+# backend/utils/image_processing.py
+
+import cv2
+import numpy as np
+from PIL import Image
+import io
+
+class ImageProcessor:
+    """
+    Utilitaires pour le traitement et preprocessing des images
+    """
+    
+    @staticmethod
+    def resize_image(image, max_width=1280, max_height=720):
+        """
+        Redimensionner l'image tout en gardant le ratio
+        
+        Args:
+            image: numpy array (OpenCV format)
+            max_width: largeur maximale
+            max_height: hauteur maximale
+        
+        Returns:
+            image redimensionnée
+        """
+        height, width = image.shape[:2]
+        
+        # Calculer le ratio de redimensionnement
+        scale = min(max_width / width, max_height / height, 1.0)
+        
+        if scale < 1.0:
+            new_width = int(width * scale)
+            new_height = int(height * scale)
+            resized = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
+            return resized
+        
+        return image
+    
+    @staticmethod
+    def enhance_image(image):
+        """
+        Améliorer la qualité de l'image pour meilleure détection
+        
+        Args:
+            image: numpy array (OpenCV format BGR)
+        
+        Returns:
+            image améliorée
+        """
+        # Convertir BGR -> LAB pour traitement
+        lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        
+        # Appliquer CLAHE (Contrast Limited Adaptive Histogram Equalization)
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        l = clahe.apply(l)
+        
+        # Recombiner les canaux
+        enhanced_lab = cv2.merge([l, a, b])
+        enhanced = cv2.cvtColor(enhanced_lab, cv2.COLOR_LAB2BGR)
+        
+        return enhanced
+    
+    @staticmethod
+    def denoise_image(image, strength=10):
+        """
+        Réduire le bruit dans l'image
+        
+        Args:
+            image: numpy array
+            strength: force du denoising (1-20)
+        
+        Returns:
+            image débruitée
+        """
+        denoised = cv2.fastNlMeansDenoisingColored(image, None, strength, strength, 7, 21)
+        return denoised
+    
+    @staticmethod
+    def normalize_image(image):
+        """
+        Normaliser les valeurs de pixels de l'image
+        
+        Args:
+            image: numpy array
+        
+        Returns:
+            image normalisée (0-255)
+        """
+        normalized = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX)
+        return normalized
+    
+    @staticmethod
+    def sharpen_image(image):
+        """
+        Augmenter la netteté de l'image
+        
+        Args:
+            image: numpy array
+        
+        Returns:
+            image plus nette
+        """
+        # Kernel de sharpening
+        kernel = np.array([
+            [0, -1, 0],
+            [-1, 5, -1],
+            [0, -1, 0]
+        ])
+        
+        sharpened = cv2.filter2D(image, -1, kernel)
+        return sharpened
+    
+    @staticmethod
+    def adjust_brightness_contrast(image, brightness=0, contrast=0):
+        """
+        Ajuster la luminosité et le contraste
+        
+        Args:
+            image: numpy array
+            brightness: -100 à 100
+            contrast: -100 à 100
+        
+        Returns:
+            image ajustée
+        """
+        # Convertir brightness et contrast en multiplicateur
+        brightness = int((brightness / 100) * 255)
+        contrast = contrast / 100
+        
+        adjusted = cv2.convertScaleAbs(image, alpha=1 + contrast, beta=brightness)
+        return adjusted
+    
+    @staticmethod
+    def convert_to_grayscale(image):
+        """
+        Convertir l'image en niveaux de gris
+        
+        Args:
+            image: numpy array (BGR)
+        
+        Returns:
+            image en grayscale
+        """
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        return gray
+    
+    @staticmethod
+    def detect_edges(image):
+        """
+        Détecter les contours dans l'image (Canny edge detection)
+        
+        Args:
+            image: numpy array
+        
+        Returns:
+            image des contours
+        """
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+        edges = cv2.Canny(blurred, 50, 150)
+        return edges
+    
+    @staticmethod
+    def crop_to_bounding_box(image, bbox):
+        """
+        Découper l'image selon un bounding box
+        
+        Args:
+            image: numpy array
+            bbox: dict avec {x, y, width, height}
+        
+        Returns:
+            image découpée
+        """
+        x = bbox['x']
+        y = bbox['y']
+        w = bbox['width']
+        h = bbox['height']
+        
+        # S'assurer que les coordonnées sont dans les limites
+        height, width = image.shape[:2]
+        x = max(0, min(x, width))
+        y = max(0, min(y, height))
+        w = min(w, width - x)
+        h = min(h, height - y)
+        
+        cropped = image[y:y+h, x:x+w]
+        return cropped
+    
+    @staticmethod
+    def add_padding(image, padding=50, color=(255, 255, 255)):
+        """
+        Ajouter un padding autour de l'image
+        
+        Args:
+            image: numpy array
+            padding: taille du padding en pixels
+            color: couleur du padding (BGR)
+        
+        Returns:
+            image avec padding
+        """
+        padded = cv2.copyMakeBorder(
+            image,
+            padding, padding, padding, padding,
+            cv2.BORDER_CONSTANT,
+            value=color
+        )
+        return padded
+    
+    @staticmethod
+    def rotate_image(image, angle):
+        """
+        Faire pivoter l'image
+        
+        Args:
+            image: numpy array
+            angle: angle en degrés (positif = sens horaire)
+        
+        Returns:
+            image pivotée
+        """
+        height, width = image.shape[:2]
+        center = (width // 2, height // 2)
+        
+        # Matrice de rotation
+        rotation_matrix = cv2.getRotationMatrix2D(center, -angle, 1.0)
+        
+        # Calculer les nouvelles dimensions
+        cos = np.abs(rotation_matrix[0, 0])
+        sin = np.abs(rotation_matrix[0, 1])
+        new_width = int((height * sin) + (width * cos))
+        new_height = int((height * cos) + (width * sin))
+        
+        # Ajuster la matrice de rotation
+        rotation_matrix[0, 2] += (new_width / 2) - center[0]
+        rotation_matrix[1, 2] += (new_height / 2) - center[1]
+        
+        # Appliquer la rotation
+        rotated = cv2.warpAffine(image, rotation_matrix, (new_width, new_height))
+        return rotated
+    
+    @staticmethod
+    def remove_background(image, threshold=240):
+        """
+        Retirer le fond blanc/clair de l'image
+        
+        Args:
+            image: numpy array
+            threshold: seuil pour considérer comme fond
+        
+        Returns:
+            image avec fond transparent (RGBA)
+        """
+        # Convertir en RGBA
+        rgba = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
+        
+        # Créer un masque pour le fond blanc
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        _, mask = cv2.threshold(gray, threshold, 255, cv2.THRESH_BINARY_INV)
+        
+        # Appliquer le masque au canal alpha
+        rgba[:, :, 3] = mask
+        
+        return rgba
+    
+    @staticmethod
+    def bytes_to_opencv(image_bytes):
+        """
+        Convertir des bytes en image OpenCV
+        
+        Args:
+            image_bytes: bytes de l'image
+        
+        Returns:
+            numpy array (OpenCV format)
+        """
+        nparr = np.frombuffer(image_bytes, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        return image
+    
+    @staticmethod
+    def opencv_to_bytes(image, format='png'):
+        """
+        Convertir image OpenCV en bytes
+        
+        Args:
+            image: numpy array
+            format: 'png' ou 'jpg'
+        
+        Returns:
+            bytes de l'image
+        """
+        if format.lower() == 'png':
+            _, buffer = cv2.imencode('.png', image)
+        else:
+            _, buffer = cv2.imencode('.jpg', image)
+        
+        return buffer.tobytes()
+    
+    @staticmethod
+    def pil_to_opencv(pil_image):
+        """
+        Convertir PIL Image en OpenCV format
+        
+        Args:
+            pil_image: PIL.Image
+        
+        Returns:
+            numpy array (OpenCV format BGR)
+        """
+        # PIL est RGB, OpenCV est BGR
+        rgb_image = np.array(pil_image)
+        bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
+        return bgr_image
+    
+    @staticmethod
+    def opencv_to_pil(opencv_image):
+        """
+        Convertir OpenCV format en PIL Image
+        
+        Args:
+            opencv_image: numpy array (BGR)
+        
+        Returns:
+            PIL.Image
+        """
+        # OpenCV est BGR, PIL est RGB
+        rgb_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(rgb_image)
+        return pil_image
+    
+    @staticmethod
+    def validate_image(image):
+        """
+        Valider qu'une image est correcte
+        
+        Args:
+            image: numpy array
+        
+        Returns:
+            bool: True si valide
+        """
+        if image is None:
+            return False
+        
+        if not isinstance(image, np.ndarray):
+            return False
+        
+        if len(image.shape) < 2:
+            return False
+        
+        if image.size == 0:
+            return False
+        
+        return True
+    
+    @staticmethod
+    def get_image_info(image):
+        """
+        Obtenir des informations sur l'image
+        
+        Args:
+            image: numpy array
+        
+        Returns:
+            dict avec width, height, channels, dtype
+        """
+        if not ImageProcessor.validate_image(image):
+            return None
+        
+        height, width = image.shape[:2]
+        channels = image.shape[2] if len(image.shape) > 2 else 1
+        
+        return {
+            'width': width,
+            'height': height,
+            'channels': channels,
+            'dtype': str(image.dtype),
+            'size_bytes': image.nbytes
+        }
+
+
+# Fonctions standalone pour usage rapide
+def quick_preprocess(image):
+    """
+    Preprocessing rapide pour détection optimale
+    
+    Args:
+        image: numpy array
+    
+    Returns:
+        image preprocessed
+    """
+    processor = ImageProcessor()
+    
+    # Redimensionner
+    image = processor.resize_image(image)
+    
+    # Améliorer contraste
+    image = processor.enhance_image(image)
+    
+    # Normaliser
+    image = processor.normalize_image(image)
+    
+    return image
+
+
+def prepare_for_yolo(image, target_size=640):
+    """
+    Préparer l'image spécifiquement pour YOLO
+    
+    Args:
+        image: numpy array
+        target_size: taille cible (YOLO préfère 640)
+    
+    Returns:
+        image prête pour YOLO
+    """
+    # Redimensionner en gardant l'aspect ratio
+    height, width = image.shape[:2]
+    scale = target_size / max(height, width)
+    
+    new_width = int(width * scale)
+    new_height = int(height * scale)
+    
+    resized = cv2.resize(image, (new_width, new_height))
+    
+    # Ajouter padding pour atteindre exactement target_size x target_size
+    delta_w = target_size - new_width
+    delta_h = target_size - new_height
+    top, bottom = delta_h // 2, delta_h - (delta_h // 2)
+    left, right = delta_w // 2, delta_w - (delta_w // 2)
+    
+    padded = cv2.copyMakeBorder(
+        resized, top, bottom, left, right,
+        cv2.BORDER_CONSTANT, value=[114, 114, 114]  # Gris
+    )
+    
+    return padded
+
+
+if __name__ == "__main__":
+    # Tests
+    print("ImageProcessor utility loaded successfully")
+    
+    # Test avec une image factice
+    test_image = np.zeros((480, 640, 3), dtype=np.uint8)
+    
+    processor = ImageProcessor()
+    info = processor.get_image_info(test_image)
+    print(f"Test image info: {info}")
+    
+    print("All image processing utilities ready!")
