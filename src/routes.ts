@@ -24,14 +24,16 @@ export const router = createBrowserRouter([
   { path: "/about",       Component: About },
   { path: "/authentication", Component: Authentication },
   { path: "/auth",        Component: Authentication },
+  
+  // Public education & AI tutor — no authentication needed
+  { path: "/education",   Component: EducationNew },
+  { path: "/ai-tutor",    Component: AITutorNew },
 
   // Protected pages — require sign-in
   { path: "/admin",       Component: protect(Administration) },
   { path: "/profile",     Component: protect(UserProfile) },
   { path: "/simulation",  Component: protect(SpaceSimulationNew) },
   { path: "/builder",     Component: protect(BuilderNew) },
-  { path: "/education",   Component: protect(EducationNew) },
-  { path: "/ai-tutor",    Component: protect(AITutorNew) },
 
   // 404
   { path: "*", Component: NotFound },
