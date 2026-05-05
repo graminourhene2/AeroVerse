@@ -37,5 +37,9 @@ def create_app():
     
     from app.routes.quiz import quiz_bp
     app.register_blueprint(quiz_bp, url_prefix="/api/quiz")
+    
+    # Configure Unity WebGL build serving
+    from unity_server_config import configure_unity_build_serving
+    configure_unity_build_serving(app)
 
     return app

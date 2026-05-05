@@ -1,0 +1,946 @@
+{
+  "sun": {
+    "name": "Sun",
+    "category": "Star",
+    "description": "The Sun is the star at the center of our Solar System. It is a nearly perfect sphere of hot plasma, with internal convective motion that generates a magnetic field. It accounts for about 99.86% of the total mass of the Solar System.",
+    "model_3d_reference": "models/sun.obj",
+    "technical_specs": [
+      "Mass: 1.989 × 10³⁰ kg",
+      "Radius: 696,340 km",
+      "Surface temperature: 5,778 K",
+      "Core temperature: 15 million K",
+      "Age: 4.6 billion years"
+    ],
+    "educational_content": {
+      "how_it_works": "Nuclear fusion in the core converts hydrogen to helium, releasing tremendous energy as light and heat.",
+      "applications": [
+        "Source of life on Earth",
+        "Solar energy generation",
+        "Space weather research"
+      ],
+      "key_principles": [
+        "Nuclear fusion",
+        "Plasma physics",
+        "Stellar evolution"
+      ]
+    }
+  },
+  "mercury": {
+    "name": "Mercury",
+    "category": "Planet",
+    "description": "Mercury is the smallest planet in our Solar System and the closest to the Sun. It has no atmosphere and experiences extreme temperature variations between day and night.",
+    "model_3d_reference": "models/mercury.obj",
+    "technical_specs": [
+      "Mass: 3.285 × 10²³ kg",
+      "Radius: 2,439 km",
+      "Orbital period: 88 days",
+      "Surface temperature: -173°C to 427°C",
+      "Distance from Sun: 57.9 million km"
+    ],
+    "educational_content": {
+      "how_it_works": "Mercury has a large iron core that generates a weak magnetic field. Its lack of atmosphere causes extreme temperature swings.",
+      "applications": [
+        "Planetary science research",
+        "Solar wind studies",
+        "Orbital mechanics"
+      ],
+      "key_principles": [
+        "Planetary formation",
+        "Thermal physics",
+        "Magnetism"
+      ]
+    }
+  },
+  "venus": {
+    "name": "Venus",
+    "category": "Planet",
+    "description": "Venus is the second planet from the Sun and Earth's closest planetary neighbor. It has a thick, toxic atmosphere that traps heat in a runaway greenhouse effect, making it the hottest planet in our solar system.",
+    "model_3d_reference": "models/venus.obj",
+    "technical_specs": [
+      "Mass: 4.867 × 10²⁴ kg",
+      "Radius: 6,051 km",
+      "Orbital period: 225 days",
+      "Surface temperature: 462°C",
+      "Atmosphere: 96.5% CO₂"
+    ],
+    "educational_content": {
+      "how_it_works": "Dense carbon dioxide atmosphere creates extreme greenhouse effect, trapping solar heat and creating surface temperatures hot enough to melt lead.",
+      "applications": [
+        "Climate science (greenhouse effect)",
+        "Atmospheric research",
+        "Comparative planetology"
+      ],
+      "key_principles": [
+        "Greenhouse effect",
+        "Atmospheric pressure",
+        "Planetary evolution"
+      ]
+    }
+  },
+  "earth": {
+    "name": "Earth",
+    "category": "Planet",
+    "description": "Earth is the third planet from the Sun and the only astronomical object known to harbor life. It has one natural satellite, the Moon, and orbits the Sun at a distance of about 150 million kilometers.",
+    "model_3d_reference": "models/earth.obj",
+    "technical_specs": [
+      "Mass: 5.972 × 10²⁴ kg",
+      "Radius: 6,371 km",
+      "Orbital period: 365.25 days",
+      "Rotation period: 23.93 hours",
+      "Surface gravity: 9.81 m/s²"
+    ],
+    "educational_content": {
+      "how_it_works": "Earth's magnetic field protects it from solar wind. Its atmosphere provides oxygen and regulates temperature through the greenhouse effect.",
+      "applications": [
+        "Human habitation",
+        "Remote sensing",
+        "Climate research",
+        "Geoscience"
+      ],
+      "key_principles": [
+        "Planetary science",
+        "Geology",
+        "Atmospheric physics",
+        "Magnetosphere"
+      ]
+    }
+  },
+  "moon": {
+    "name": "Moon",
+    "category": "Natural Satellite",
+    "description": "Earth's only natural satellite and the fifth largest moon in the Solar System. The Moon stabilizes Earth's axial tilt and creates ocean tides through gravitational interaction.",
+    "model_3d_reference": "models/moon.obj",
+    "technical_specs": [
+      "Mass: 7.342 × 10²² kg",
+      "Radius: 1,737 km",
+      "Orbital period: 27.3 days",
+      "Distance from Earth: 384,400 km",
+      "Surface gravity: 1.62 m/s²"
+    ],
+    "educational_content": {
+      "how_it_works": "The Moon's gravitational pull creates tidal forces on Earth. It is tidally locked, always showing the same face to Earth.",
+      "applications": [
+        "Lunar exploration",
+        "Tidal science",
+        "Space mission staging point",
+        "Astronomical research"
+      ],
+      "key_principles": [
+        "Tidal forces",
+        "Orbital mechanics",
+        "Tidal locking"
+      ]
+    }
+  },
+  "mars": {
+    "name": "Mars",
+    "category": "Planet",
+    "description": "Mars is the fourth planet from the Sun, known as the Red Planet due to iron oxide on its surface. It has been a primary target for exploration due to evidence of past water and potential for past or present life.",
+    "model_3d_reference": "models/mars.obj",
+    "technical_specs": [
+      "Mass: 6.39 × 10²³ kg",
+      "Radius: 3,390 km",
+      "Orbital period: 687 days",
+      "Surface gravity: 3.71 m/s²",
+      "Moons: Phobos and Deimos"
+    ],
+    "educational_content": {
+      "how_it_works": "Mars has polar ice caps, extinct volcanoes (including Olympus Mons, the largest in the solar system), and evidence of ancient river valleys suggesting past liquid water.",
+      "applications": [
+        "Mars exploration missions",
+        "Future human colonization",
+        "Astrobiology research",
+        "Planetary geology"
+      ],
+      "key_principles": [
+        "Planetary geology",
+        "Astrobiology",
+        "Space exploration",
+        "Terraforming concepts"
+      ]
+    }
+  },
+  "jupiter": {
+    "name": "Jupiter",
+    "category": "Gas Giant",
+    "description": "Jupiter is the largest planet in our Solar System, with a mass more than twice that of all other planets combined. It has a Great Red Spot, a massive storm larger than Earth.",
+    "model_3d_reference": "models/jupiter.obj",
+    "technical_specs": [
+      "Mass: 1.898 × 10²⁷ kg",
+      "Radius: 69,911 km",
+      "Orbital period: 11.86 years",
+      "Rotation period: 9.9 hours",
+      "Moons: 95 confirmed"
+    ],
+    "educational_content": {
+      "how_it_works": "Jupiter's massive gravity protects inner planets from asteroid impacts. Its rapid rotation creates powerful atmospheric bands and storms.",
+      "applications": [
+        "Planetary science",
+        "Magnetosphere research",
+        "Moon exploration (Europa, Ganymede)",
+        "Asteroid deflection studies"
+      ],
+      "key_principles": [
+        "Gas giant physics",
+        "Atmospheric dynamics",
+        "Magnetospheres",
+        "Tidal heating"
+      ]
+    }
+  },
+  "saturn": {
+    "name": "Saturn",
+    "category": "Gas Giant",
+    "description": "Saturn is the sixth planet from the Sun and the second-largest in the Solar System. It is famous for its extensive ring system made of ice particles, rocky debris, and dust.",
+    "model_3d_reference": "models/saturn.obj",
+    "technical_specs": [
+      "Mass: 5.683 × 10²⁶ kg",
+      "Radius: 58,232 km",
+      "Orbital period: 29.46 years",
+      "Ring span: 282,000 km",
+      "Moons: 146 confirmed"
+    ],
+    "educational_content": {
+      "how_it_works": "Saturn's rings are made of countless particles ranging from tiny grains to house-sized chunks, held in place by gravitational interactions.",
+      "applications": [
+        "Ring dynamics research",
+        "Moon studies (Titan, Enceladus)",
+        "Planetary formation",
+        "Astrobiology (Enceladus subsurface ocean)"
+      ],
+      "key_principles": [
+        "Ring dynamics",
+        "Gravitational interactions",
+        "Planetary composition",
+        "Roche limit"
+      ]
+    }
+  },
+  "uranus": {
+    "name": "Uranus",
+    "category": "Ice Giant",
+    "description": "Uranus is the seventh planet from the Sun and has a unique sideways rotation. It appears blue-green due to methane in its atmosphere and has a system of faint rings.",
+    "model_3d_reference": "models/uranus.obj",
+    "technical_specs": [
+      "Mass: 8.681 × 10²⁵ kg",
+      "Radius: 25,362 km",
+      "Orbital period: 84 years",
+      "Axial tilt: 97.8°",
+      "Moons: 27 confirmed"
+    ],
+    "educational_content": {
+      "how_it_works": "Uranus rotates on its side, likely due to a massive collision early in its history. Its extreme tilt causes unusual seasonal variations.",
+      "applications": [
+        "Ice giant research",
+        "Atmospheric composition studies",
+        "Magnetosphere research",
+        "Impact dynamics"
+      ],
+      "key_principles": [
+        "Axial tilt effects",
+        "Ice giant composition",
+        "Unusual magnetosphere",
+        "Planetary collisions"
+      ]
+    }
+  },
+  "neptune": {
+    "name": "Neptune",
+    "category": "Ice Giant",
+    "description": "Neptune is the eighth and farthest planet from the Sun. It has the strongest winds in the solar system, reaching speeds of 2,100 km/h, and appears deep blue due to methane.",
+    "model_3d_reference": "models/neptune.obj",
+    "technical_specs": [
+      "Mass: 1.024 × 10²⁶ kg",
+      "Radius: 24,622 km",
+      "Orbital period: 164.8 years",
+      "Wind speeds: Up to 2,100 km/h",
+      "Moons: 16 confirmed"
+    ],
+    "educational_content": {
+      "how_it_works": "Neptune's internal heat drives the strongest winds in the solar system. Its Great Dark Spot is a storm system similar to Jupiter's Great Red Spot.",
+      "applications": [
+        "Atmospheric dynamics research",
+        "Ice giant studies",
+        "Triton research (retrograde orbit)",
+        "Extreme weather phenomena"
+      ],
+      "key_principles": [
+        "Atmospheric circulation",
+        "Internal heat generation",
+        "Ice giant physics",
+        "Orbital capture (Triton)"
+      ]
+    }
+  },
+  "black_hole": {
+    "name": "Black Hole",
+    "category": "Astronomical Object",
+    "description": "A region of spacetime where gravity is so strong that nothing, not even light, can escape. Formed from the collapse of massive stars or found at galactic centers as supermassive black holes.",
+    "model_3d_reference": "models/black_hole.obj",
+    "technical_specs": [
+      "Event horizon: Schwarzschild radius",
+      "Mass range: 5-100 solar masses (stellar)",
+      "Supermassive: Millions to billions of solar masses",
+      "Singularity: Infinite density (theoretical)",
+      "Hawking radiation: Theoretical emission"
+    ],
+    "educational_content": {
+      "how_it_works": "Extreme gravity warps spacetime, creating an event horizon beyond which nothing can escape. Matter falling in releases tremendous energy.",
+      "applications": [
+        "Astrophysics research",
+        "General relativity testing",
+        "Gravitational wave detection",
+        "Galactic evolution studies"
+      ],
+      "key_principles": [
+        "General relativity",
+        "Spacetime curvature",
+        "Event horizons",
+        "Quantum mechanics (Hawking radiation)"
+      ]
+    }
+  },
+  "orion_nebula": {
+    "name": "Orion Nebula",
+    "category": "Nebula",
+    "description": "A diffuse nebula in the Milky Way, visible to the naked eye in the constellation Orion. It is one of the brightest nebulae and a stellar nursery where new stars are being formed.",
+    "model_3d_reference": "models/orion_nebula.obj",
+    "technical_specs": [
+      "Distance: 1,344 light-years",
+      "Diameter: 24 light-years",
+      "Mass: ~2,000 solar masses",
+      "Age: ~3 million years",
+      "Temperature: 10,000 K (ionized gas)"
+    ],
+    "educational_content": {
+      "how_it_works": "Dense clouds of gas and dust collapse under gravity, forming protostars that eventually ignite nuclear fusion, creating new stars.",
+      "applications": [
+        "Star formation studies",
+        "Stellar evolution research",
+        "Astrophotography",
+        "Interstellar medium studies"
+      ],
+      "key_principles": [
+        "Stellar formation",
+        "Gas dynamics",
+        "Gravitational collapse",
+        "Nuclear fusion ignition"
+      ]
+    }
+  },
+  "pulsar": {
+    "name": "Pulsar",
+    "category": "Neutron Star",
+    "description": "A highly magnetized rotating neutron star that emits beams of electromagnetic radiation. Observable as pulses of radiation as the star rotates, acting as a cosmic lighthouse.",
+    "model_3d_reference": "models/pulsar.obj",
+    "technical_specs": [
+      "Diameter: ~20 km",
+      "Mass: 1.4-2 solar masses",
+      "Rotation: Milliseconds to seconds",
+      "Magnetic field: 10⁸-10¹¹ Tesla",
+      "Emission: Radio, X-ray, gamma-ray"
+    ],
+    "educational_content": {
+      "how_it_works": "Rapidly rotating neutron star emits radiation beams from its magnetic poles. As it rotates, these beams sweep across Earth like a lighthouse.",
+      "applications": [
+        "Cosmic timekeepers",
+        "General relativity tests",
+        "Gravitational wave detection",
+        "Pulsar navigation (for spacecraft)"
+      ],
+      "key_principles": [
+        "Neutron star physics",
+        "Extreme magnetism",
+        "Stellar evolution endpoints",
+        "Relativistic rotation"
+      ]
+    }
+  },
+  "ceres": {
+    "name": "Ceres (Dwarf Planet)",
+    "category": "Dwarf Planet",
+    "description": "The largest object in the asteroid belt between Mars and Jupiter. Classified as a dwarf planet and contains about one-third of the belt's total mass. Visited by NASA's Dawn spacecraft.",
+    "model_3d_reference": "models/ceres.obj",
+    "technical_specs": [
+      "Diameter: 939 km",
+      "Mass: 9.38 × 10²⁰ kg",
+      "Orbital period: 4.6 years",
+      "Surface: Ice and rock mixture",
+      "Dawn mission: 2015-2018"
+    ],
+    "educational_content": {
+      "how_it_works": "Ceres likely has a rocky core and icy mantle, with possible subsurface water ocean. Bright spots on surface are salt deposits.",
+      "applications": [
+        "Asteroid belt research",
+        "Dwarf planet studies",
+        "Solar system formation",
+        "Water ice research"
+      ],
+      "key_principles": [
+        "Planetary differentiation",
+        "Asteroid composition",
+        "Orbital mechanics",
+        "Cryovolcanism"
+      ]
+    }
+  },
+  "asteroid": {
+    "name": "Asteroid",
+    "category": "Small Body",
+    "description": "Rocky, airless remnants left over from the early formation of our solar system about 4.6 billion years ago. Most orbit between Mars and Jupiter in the main asteroid belt.",
+    "model_3d_reference": "models/asteroid.obj",
+    "technical_specs": [
+      "Size range: Meters to hundreds of km",
+      "Composition: Rock, metal, ice",
+      "Types: C-type (carbon), S-type (silicate), M-type (metal)",
+      "Number: Millions in asteroid belt",
+      "Orbits: Varied, mostly elliptical"
+    ],
+    "educational_content": {
+      "how_it_works": "Asteroids are remnants from planetary formation that never coalesced into a planet, held in orbit by the Sun's gravity.",
+      "applications": [
+        "Solar system history research",
+        "Impact hazard assessment",
+        "Future resource mining",
+        "Planetary defense"
+      ],
+      "key_principles": [
+        "Orbital mechanics",
+        "Planetary formation",
+        "Impact physics",
+        "Gravitational perturbations"
+      ]
+    }
+  },
+  "meteoroid": {
+    "name": "Meteoroid",
+    "category": "Small Body",
+    "description": "Small rocky or metallic bodies in space, smaller than asteroids. When they enter Earth's atmosphere, they become meteors (shooting stars). If they reach the ground, they're called meteorites.",
+    "model_3d_reference": "models/meteoroid.obj",
+    "technical_specs": [
+      "Size: Grain of sand to 1 meter",
+      "Velocity: 11-72 km/s",
+      "Origin: Asteroids, comets",
+      "Composition: Rock, metal, ice",
+      "Atmosphere entry: Becomes meteor"
+    ],
+    "educational_content": {
+      "how_it_works": "Meteoroids travel through space until entering a planet's atmosphere, where friction causes them to heat up, glow, and often vaporize.",
+      "applications": [
+        "Meteor shower observation",
+        "Atmospheric research",
+        "Impact crater studies",
+        "Solar system composition analysis"
+      ],
+      "key_principles": [
+        "Atmospheric entry physics",
+        "Kinetic energy",
+        "Ablation",
+        "Terminal velocity"
+      ]
+    }
+  },
+  "lunar_gateway": {
+    "name": "Lunar Gateway",
+    "category": "Space Station",
+    "description": "A planned space station in lunar orbit intended to serve as a communication hub, science laboratory, short-term habitation module, and staging point for missions to the Moon and Mars. Part of NASA's Artemis program.",
+    "model_3d_reference": "models/lunar_gateway.obj",
+    "technical_specs": [
+      "Orbit: Near-rectilinear halo orbit (NRHO)",
+      "Mass: ~40,000 kg (initial configuration)",
+      "Power: Solar arrays (60 kW)",
+      "Modules: Habitation, logistics, power, propulsion",
+      "Crew capacity: 4 astronauts"
+    ],
+    "educational_content": {
+      "how_it_works": "Gateway will orbit the Moon in a unique trajectory that allows access to the entire lunar surface with minimal fuel, serving as a staging point for surface missions.",
+      "applications": [
+        "Lunar surface missions",
+        "Mars mission preparation",
+        "Scientific research",
+        "International cooperation",
+        "Deep space operations"
+      ],
+      "key_principles": [
+        "Orbital mechanics (NRHO)",
+        "Life support systems",
+        "Modular construction",
+        "In-space assembly"
+      ]
+    }
+  },
+  "iss": {
+    "name": "International Space Station",
+    "category": "Space Station",
+    "description": "The ISS is a modular space station in low Earth orbit. It is a multinational collaborative project involving NASA, Roscosmos, ESA, JAXA, and CSA. The station serves as a microgravity and space environment research laboratory.",
+    "model_3d_reference": "models/iss.obj",
+    "technical_specs": [
+      "Orbit altitude: 408 km",
+      "Mass: 419,725 kg",
+      "Length: 109 meters",
+      "Width: 73 meters",
+      "Crew: 6-7 astronauts (typical)"
+    ],
+    "educational_content": {
+      "how_it_works": "The ISS orbits Earth every 90 minutes at 28,000 km/h, providing a platform for scientific research in microgravity and testing technologies for deep space exploration.",
+      "applications": [
+        "Microgravity research",
+        "Technology testing",
+        "International cooperation",
+        "Earth observation",
+        "Human physiology studies"
+      ],
+      "key_principles": [
+        "Microgravity effects",
+        "Life support systems",
+        "Orbital mechanics",
+        "Solar power generation"
+      ]
+    }
+  },
+  "dsn_antenna": {
+    "name": "Deep Space Network Antenna",
+    "category": "Ground Station",
+    "description": "The DSN consists of three facilities worldwide (California, Spain, Australia) equipped with large radio antennas used to communicate with spacecraft across the solar system. The 70-meter antennas are among the largest and most sensitive.",
+    "model_3d_reference": "models/dsn_antenna.obj",
+    "technical_specs": [
+      "Dish diameter: 70 meters",
+      "Gain: 74 dBi at X-band",
+      "Frequency range: 2-32 GHz",
+      "Locations: Goldstone (USA), Madrid (Spain), Canberra (Australia)",
+      "Pointing accuracy: 0.01 degrees"
+    ],
+    "educational_content": {
+      "how_it_works": "Large parabolic dish antennas transmit commands and receive data from deep space missions using radio frequencies. Three global stations provide 24/7 coverage.",
+      "applications": [
+        "Deep space communications",
+        "Spacecraft tracking",
+        "Radio astronomy",
+        "Interplanetary mission support",
+        "SETI searches"
+      ],
+      "key_principles": [
+        "Radio astronomy",
+        "Signal processing",
+        "Antenna theory",
+        "Doppler tracking",
+        "Very Long Baseline Interferometry"
+      ]
+    }
+  },
+  "agena_target_vehicle": {
+    "name": "Agena Target Vehicle",
+    "category": "Spacecraft",
+    "description": "The Agena was an uncrewed spacecraft used by NASA in the 1960s as a docking target for Gemini missions. It demonstrated orbital rendezvous and docking techniques critical for the Apollo moon program.",
+    "model_3d_reference": "models/agena.obj",
+    "technical_specs": [
+      "Length: 7.9 meters",
+      "Diameter: 1.5 meters",
+      "Mass: 3,260 kg",
+      "Engine: Bell 8081 (16,000 lbf)",
+      "Missions: Gemini 8, 10, 11, 12"
+    ],
+    "educational_content": {
+      "how_it_works": "Agena served as an orbital target for Gemini spacecraft to practice docking maneuvers necessary for lunar missions. Its engine could also boost the combined stack to higher orbits.",
+      "applications": [
+        "Rendezvous and docking training",
+        "Orbital maneuvering practice",
+        "Space technology development",
+        "Astronaut EVA platform"
+      ],
+      "key_principles": [
+        "Orbital rendezvous",
+        "Spacecraft docking",
+        "Mission planning",
+        "Orbital mechanics"
+      ]
+    }
+  },
+  "progress_ms": {
+    "name": "Progress Cargo Spacecraft",
+    "category": "Cargo Vehicle",
+    "description": "Progress is an automated, uncrewed cargo spacecraft developed by Russia to resupply the International Space Station with food, water, propellant, oxygen, and equipment. It can also boost the ISS orbit and dispose of waste.",
+    "model_3d_reference": "models/progress_ms.obj",
+    "technical_specs": [
+      "Length: 7.23 meters",
+      "Diameter: 2.72 meters",
+      "Launch mass: 7,020 kg",
+      "Cargo capacity: 2,400 kg",
+      "Docking: Automated (Kurs system)"
+    ],
+    "educational_content": {
+      "how_it_works": "Progress uses the automated Kurs rendezvous system to dock with ISS. After unloading, it's filled with waste and burns up in Earth's atmosphere during reentry.",
+      "applications": [
+        "ISS resupply",
+        "Orbit altitude maintenance",
+        "Waste disposal",
+        "Emergency backup capabilities"
+      ],
+      "key_principles": [
+        "Automated docking",
+        "Orbital mechanics",
+        "Logistics",
+        "Controlled reentry"
+      ]
+    }
+  },
+  "acrimsat": {
+    "name": "ACRIMSAT",
+    "category": "Earth Observation Satellite",
+    "description": "The Active Cavity Radiometer Irradiance Monitor Satellite measures total solar irradiance to study the Sun's effect on Earth's climate. It provided critical data on solar variability and climate forcing.",
+    "model_3d_reference": "models/acrimsat.obj",
+    "technical_specs": [
+      "Launch: December 1999",
+      "Orbit: Sun-synchronous, 705 km",
+      "Mass: 103 kg",
+      "Instrument: ACRIM III radiometer",
+      "Mission duration: 14 years (1999-2013)"
+    ],
+    "educational_content": {
+      "how_it_works": "ACRIM III measures the total amount of solar radiation reaching Earth to track solar variability and its influence on climate change.",
+      "applications": [
+        "Climate research",
+        "Solar physics",
+        "Earth observation",
+        "Climate model validation"
+      ],
+      "key_principles": [
+        "Solar irradiance measurement",
+        "Climate science",
+        "Remote sensing",
+        "Radiometry"
+      ]
+    }
+  },
+  "landsat": {
+    "name": "Landsat",
+    "category": "Earth Observation Satellite",
+    "description": "Landsat satellites provide continuous Earth observation data since 1972, making it the longest-running enterprise for acquisition of satellite imagery of Earth. Critical for monitoring land use, resources, and environmental change.",
+    "model_3d_reference": "models/landsat.obj",
+    "technical_specs": [
+      "Orbit: Sun-synchronous, 705 km",
+      "Resolution: 15-30 meters (multispectral)",
+      "Swath width: 185 km",
+      "Repeat cycle: 16 days",
+      "Instruments: OLI (Operational Land Imager), TIRS (Thermal Infrared Sensor)"
+    ],
+    "educational_content": {
+      "how_it_works": "Multi-spectral imaging captures Earth's surface in visible and infrared wavelengths, revealing information invisible to human eyes for environmental monitoring.",
+      "applications": [
+        "Land use and land cover mapping",
+        "Agriculture monitoring",
+        "Deforestation tracking",
+        "Urban planning",
+        "Water resources management",
+        "Disaster response"
+      ],
+      "key_principles": [
+        "Remote sensing",
+        "Multi-spectral imaging",
+        "Sun-synchronous orbits",
+        "Spectral signatures"
+      ]
+    }
+  },
+  "satellite_generic": {
+    "name": "Satellite",
+    "category": "Spacecraft",
+    "description": "An artificial object placed in orbit around Earth or another celestial body. Satellites serve various purposes including communications, navigation, Earth observation, weather monitoring, and scientific research.",
+    "model_3d_reference": "models/satellite.obj",
+    "technical_specs": [
+      "Orbit types: LEO (400-2000km), MEO (2000-35000km), GEO (35,786km)",
+      "Power: Solar panels (500W-15kW)",
+      "Mass: 100-6,000 kg",
+      "Lifespan: 5-20 years",
+      "Attitude control: Reaction wheels, magnetorquers, thrusters"
+    ],
+    "educational_content": {
+      "how_it_works": "Satellites maintain orbit through balance of gravitational pull and orbital velocity. Onboard systems provide power, communication, orientation control, and mission-specific operations.",
+      "applications": [
+        "Telecommunications",
+        "GPS navigation",
+        "Weather forecasting",
+        "Earth observation",
+        "Scientific research",
+        "Military reconnaissance"
+      ],
+      "key_principles": [
+        "Orbital mechanics",
+        "Radio communications",
+        "Solar power generation",
+        "Attitude determination and control"
+      ]
+    }
+  },
+  "astronaut": {
+    "name": "Astronaut",
+    "category": "Human Spaceflight",
+    "description": "A person trained, equipped, and deployed by a space program to serve as a commander or crew member aboard a spacecraft. Astronauts conduct scientific research, maintain spacecraft systems, and perform spacewalks (EVAs).",
+    "model_3d_reference": "models/astronaut.obj",
+    "technical_specs": [
+      "Training duration: 2-3 years",
+      "Spacesuit: EMU (Extravehicular Mobility Unit)",
+      "Life support: 8 hours oxygen supply",
+      "Suit pressure: 4.3 psi (0.3 atm)",
+      "Temperature control: Active liquid cooling garment"
+    ],
+    "educational_content": {
+      "how_it_works": "Astronauts undergo extensive training in spacecraft systems, survival skills, spacewalk procedures, robotics, scientific research, and physical conditioning to adapt to microgravity.",
+      "applications": [
+        "ISS operations and maintenance",
+        "Scientific experiments",
+        "Spacewalks and repairs",
+        "Future lunar and Mars missions",
+        "Space station assembly"
+      ],
+      "key_principles": [
+        "Human physiology in microgravity",
+        "Life support systems",
+        "Radiation protection",
+        "Bone and muscle adaptation"
+      ]
+    }
+  },
+  "turbofan_engine": {
+    "name": "Turbofan Engine",
+    "category": "Engine",
+    "description": "A turbofan engine is a type of jet engine that uses a ducted fan to accelerate air around the engine core. It provides high thrust efficiency and is commonly used in commercial aviation. The bypass air provides additional thrust while reducing noise and improving fuel efficiency.",
+    "model_3d_reference": "models/turbofan_engine.obj",
+    "technical_specs": [
+      "Thrust: 20,000-25,000 lbf",
+      "Bypass ratio: 9:1",
+      "Fan diameter: 78 inches",
+      "Weight: 4,500 kg",
+      "Max temperature: 1,500°C"
+    ],
+    "educational_content": {
+      "how_it_works": "The fan draws in air, part goes through the core (combustion) and part bypasses it, creating efficient thrust.",
+      "applications": [
+        "Commercial aviation",
+        "Military transport aircraft",
+        "Business jets"
+      ],
+      "key_principles": [
+        "Bernoulli's principle",
+        "Newton's third law",
+        "Thermodynamics"
+      ]
+    }
+  },
+  "rocket_engine": {
+    "name": "Rocket Engine",
+    "category": "Engine",
+    "description": "A rocket engine generates thrust through the expulsion of high-velocity exhaust gases. It operates on Newton's third law, producing thrust in the opposite direction of exhaust flow. Commonly uses liquid or solid propellants and is essential for space launch vehicles.",
+    "model_3d_reference": "models/rocket_engine.obj",
+    "technical_specs": [
+      "Thrust: 190,000 lbf",
+      "Specific impulse: 311s (sea level)",
+      "Propellant: LOX/RP-1",
+      "Burn time: 162 seconds",
+      "Gimbal range: ±10 degrees"
+    ],
+    "educational_content": {
+      "how_it_works": "Combustion of propellants creates high-pressure gas that is expelled through a nozzle at supersonic speeds.",
+      "applications": [
+        "Space launch vehicles",
+        "Missiles",
+        "Spacecraft propulsion"
+      ],
+      "key_principles": [
+        "Newton's third law",
+        "Conservation of momentum",
+        "Tsiolkovsky rocket equation"
+      ]
+    }
+  },
+  "wing": {
+    "name": "Aircraft Wing",
+    "category": "Structure",
+    "description": "An aircraft wing generates lift through its airfoil shape and pressure differential. Its curved upper surface creates lower pressure above and higher pressure below, producing upward force. Wings also house fuel tanks and control surfaces for flight stability.",
+    "model_3d_reference": "models/aircraft_wing.obj",
+    "technical_specs": [
+      "Wingspan: 35-60 meters (commercial)",
+      "Aspect ratio: 8-11",
+      "Wing area: 120-550 m²",
+      "Airfoil: NACA 23012 (example)",
+      "Material: Aluminum alloy / Carbon composite"
+    ],
+    "educational_content": {
+      "how_it_works": "Airfoil shape creates pressure difference - lower pressure above, higher below, resulting in net upward lift force.",
+      "applications": [
+        "Commercial aircraft",
+        "Military fighters",
+        "General aviation",
+        "Gliders"
+      ],
+      "key_principles": [
+        "Bernoulli's principle",
+        "Angle of attack",
+        "Lift coefficient"
+      ]
+    }
+  },
+  "turbine_blade": {
+    "name": "Turbine Blade",
+    "category": "Propulsion",
+    "description": "A turbine blade extracts energy from high-temperature gas flow in jet engines. These precision-engineered components must withstand extreme temperatures and rotational forces while efficiently converting thermal energy to mechanical rotation.",
+    "model_3d_reference": "models/turbine_blade.obj",
+    "technical_specs": [
+      "Material: Nickel-based superalloy",
+      "Operating temperature: 1,400-1,700°C",
+      "Length: 10-40 cm",
+      "Coating: Thermal barrier coating (TBC)",
+      "Cooling: Internal air channels"
+    ],
+    "educational_content": {
+      "how_it_works": "Hot exhaust gases from combustion spin the turbine blades, which drive the compressor and fan via a shaft.",
+      "applications": [
+        "Jet engines",
+        "Gas turbines",
+        "Power generation turbines"
+      ],
+      "key_principles": [
+        "Energy conversion",
+        "Thermodynamics",
+        "Material science",
+        "Heat transfer"
+      ]
+    }
+  },
+  "fuel_tank": {
+    "name": "Aerospace Fuel Tank",
+    "category": "Spacecraft",
+    "description": "Storage container for rocket propellant or aircraft fuel. Must maintain structural integrity under pressure while minimizing weight. Often insulated for cryogenic fuels and designed to prevent fuel sloshing during flight.",
+    "model_3d_reference": "models/fuel_tank.obj",
+    "technical_specs": [
+      "Capacity: 50-150 tons (rockets)",
+      "Material: Aluminum-lithium alloy",
+      "Pressure: 20-60 psi",
+      "Insulation: Foam for cryogenic fuels",
+      "Shape: Cylindrical with domed ends"
+    ],
+    "educational_content": {
+      "how_it_works": "Stores fuel under controlled pressure, with insulation for cryogenic liquids like liquid oxygen and liquid hydrogen.",
+      "applications": [
+        "Rocket stages",
+        "Aircraft wing tanks",
+        "Spacecraft fuel systems"
+      ],
+      "key_principles": [
+        "Pressure vessel design",
+        "Cryogenics",
+        "Structural integrity",
+        "Thermal insulation"
+      ]
+    }
+  },
+  "landing_gear": {
+    "name": "Landing Gear",
+    "category": "Structure",
+    "description": "Retractable wheels and shock absorbers for aircraft landing and takeoff. Consists of hydraulic struts, wheels, brakes, and retraction mechanisms. Designed to absorb landing impact and support aircraft weight on the ground.",
+    "model_3d_reference": "models/landing_gear.obj",
+    "technical_specs": [
+      "Load capacity: 50-200 tons",
+      "Tire pressure: 200 psi",
+      "Hydraulic system: 3000 psi",
+      "Retraction time: 5-10 seconds",
+      "Material: Steel, titanium alloys"
+    ],
+    "educational_content": {
+      "how_it_works": "Hydraulic shock struts absorb landing impact energy. Wheels support weight, and hydraulic systems retract gear to reduce drag in flight.",
+      "applications": [
+        "Commercial aircraft",
+        "Military aircraft",
+        "Helicopters",
+        "Space shuttle"
+      ],
+      "key_principles": [
+        "Hydraulic systems",
+        "Shock absorption",
+        "Mechanical engineering",
+        "Structural load distribution"
+      ]
+    }
+  },
+  "cockpit": {
+    "name": "Aircraft Cockpit",
+    "category": "Structure",
+    "description": "The pilot's control area containing instruments, displays, and flight controls. Modern cockpits feature glass displays, fly-by-wire systems, and integrated avionics for navigation, communication, and aircraft monitoring.",
+    "model_3d_reference": "models/cockpit.obj",
+    "technical_specs": [
+      "Displays: Glass cockpit (LCD screens)",
+      "Controls: Fly-by-wire system",
+      "Windows: Laminated acrylic",
+      "Pressurization: 8,000 ft cabin altitude",
+      "Avionics: GPS, autopilot, radar, TCAS"
+    ],
+    "educational_content": {
+      "how_it_works": "Pilots use integrated displays and controls to monitor aircraft systems and manage flight. Fly-by-wire converts control inputs to electronic signals.",
+      "applications": [
+        "Commercial aircraft",
+        "Military aircraft",
+        "Spacecraft",
+        "Flight simulators"
+      ],
+      "key_principles": [
+        "Human factors engineering",
+        "Avionics systems",
+        "Automation",
+        "Ergonomics"
+      ]
+    }
+  },
+  "propeller": {
+    "name": "Aircraft Propeller",
+    "category": "Propulsion",
+    "description": "A rotating blade assembly that converts engine power into thrust by accelerating air backward. Propellers are highly efficient at lower speeds and are used in general aviation and turboprop aircraft.",
+    "model_3d_reference": "models/propeller.obj",
+    "technical_specs": [
+      "Diameter: 2-4 meters (typical)",
+      "Blades: 2-6 blades",
+      "Material: Aluminum or composite",
+      "RPM: 1,500-2,700 rpm",
+      "Pitch: Variable or fixed"
+    ],
+    "educational_content": {
+      "how_it_works": "Propeller blades act as rotating wings, creating thrust by pushing air backward using their airfoil shape.",
+      "applications": [
+        "General aviation",
+        "Turboprop aircraft",
+        "Drones",
+        "Historic aircraft"
+      ],
+      "key_principles": [
+        "Lift generation",
+        "Angular momentum",
+        "Blade element theory"
+      ]
+    }
+  },
+  "tail_section": {
+    "name": "Aircraft Tail Section",
+    "category": "Structure",
+    "description": "The rear portion of an aircraft containing vertical and horizontal stabilizers for flight stability and control. Includes rudder and elevator control surfaces.",
+    "model_3d_reference": "models/tail_section.obj",
+    "technical_specs": [
+      "Vertical stabilizer height: 5-10 meters",
+      "Horizontal stabilizer span: 10-20 meters",
+      "Material: Aluminum or composite",
+      "Control surfaces: Rudder, elevator",
+      "Trim tabs: Adjustable control aids"
+    ],
+    "educational_content": {
+      "how_it_works": "Stabilizers provide aerodynamic stability. Rudder controls yaw (left-right), elevator controls pitch (up-down).",
+      "applications": [
+        "All fixed-wing aircraft",
+        "Conventional tail configuration",
+        "T-tail configuration"
+      ],
+      "key_principles": [
+        "Aerodynamic stability",
+        "Control surfaces",
+        "Center of gravity"
+      ]
+    }
+  }
+}

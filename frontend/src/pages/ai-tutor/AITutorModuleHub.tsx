@@ -3,7 +3,7 @@ import { Card } from "../../components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { ChatInterface } from "./ChatInterface";
 import { LanguageSelection } from "./LanguageSelection";
-import { MessageCircle, Globe, Clock } from "lucide-react";
+import { Bot, Globe, Clock } from "lucide-react";
 
 export function AITutorModuleHub() {
   return (
@@ -25,7 +25,7 @@ export function AITutorModuleHub() {
           <Tabs defaultValue="chat" className="w-full">
             <TabsList className="bg-purple-900/30 border border-purple-500/30 rounded-xl p-1 mb-8">
               <TabsTrigger value="chat" className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4" />
+                <Bot className="w-4 h-4" />
                 Chat
               </TabsTrigger>
               <TabsTrigger value="language" className="flex items-center gap-2">

@@ -1,5 +1,5 @@
 import { Button } from "./components/ui/button";
-import { Rocket, Menu, Sparkles, Wrench, GraduationCap, Bot, User, X, Users, LogOut } from "lucide-react";
+import { Menu, Sparkles, Wrench, GraduationCap, Bot, User, X, Users, LogOut, ShieldCheck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -29,8 +29,9 @@ export function Navigation() {
   ];
 
   const userItems = [
-    { path: "/about", label: "About", icon: Users },
+    { path: "/about",   label: "About",   icon: Users },
     { path: "/profile", label: "Profile", icon: User },
+    ...(user?.role === "admin" ? [{ path: "/admin", label: "Admin", icon: ShieldCheck }] : []),
   ];
 
   const handleLogout = () => {
@@ -45,9 +46,6 @@ export function Navigation() {
         <div className="flex items-center justify-between rounded-2xl border border-purple-400/20 bg-[#0a0518]/80 backdrop-blur-xl px-6 py-4 shadow-lg shadow-purple-500/5">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/50">
-              <Rocket className="w-5 h-5 text-white" />
-            </div>
             <span className="text-xl font-semibold text-purple-100">
               AeroVerse
             </span>

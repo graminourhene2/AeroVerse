@@ -1,10 +1,6 @@
-import { Navigation } from "../Navigation";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Card } from "../components/ui/card";
 import { useState, useEffect } from "react";
 import { api } from "../api";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 export function Authentication() {
   const location = useLocation();
@@ -15,166 +11,237 @@ export function Authentication() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const getRedirectPath = () => {
     const params = new URLSearchParams(location.search);
-    if (params.get("mode") === "signup") {
-      setIsLogin(false);
+    return params.get("redirect") || "/";
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      window.location.href = getRedirectPath();
+      return;
     }
+    const params = new URLSearchParams(location.search);
+    if (params.get("mode") === "signup") setIsLogin(false);
   }, [location]);
+
+  const getUsers = (): { id: number; email: string; username: string; password: string }[] =>
+    JSON.parse(localStorage.getItem("aeroverse_users") || "[]");
 
   const handleSubmit = async () => {
     setError("");
     setLoading(true);
-
     try {
       if (isLogin) {
-        const result = await api.login({ email, password });
-        if (result.error) {
-          // Sanitize and show user-friendly error messages
-          const errorMsg = result.error.toLowerCase();
-          if (errorMsg.includes("incorrect") || errorMsg.includes("invalid")) {
-            setError("❌ Email or password is incorrect.");
-          } else if (errorMsg.includes("not found")) {
-            setError("❌ User not found. Please create an account.");
+        const users = getUsers();
+        const user = users.find((u) => u.email === email && u.password === password);
+        if (!user) {
+          const result = await api.login({ email, password }).catch(() => ({ error: "offline" }));
+          if (result?.token) {
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("user", JSON.stringify(result.user));
+            setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
           } else {
-            // Show generic error instead of backend details
-            setError("❌ Unable to sign in. Please try again.");
+            setError("Incorrect email or password.");
           }
-        } else if (result.token) {
-          // Logout first if already connected
-          const existingToken = localStorage.getItem("token");
-          if (existingToken) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-          }
-          
-          // Store new credentials
-          localStorage.setItem("token", result.token);
-          localStorage.setItem("user", JSON.stringify(result.user));
-          
-          // Redirect to homepage
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 500);
+        } else {
+          localStorage.setItem("token", `local_${Date.now()}`);
+          localStorage.setItem("user", JSON.stringify({ id: user.id, email: user.email, username: user.username }));
+          setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
         }
       } else {
-        // Sign Up
-        if (!username.trim()) {
-          setError("❌ Username is required.");
-          setLoading(false);
-          return;
-        }
-        
-        const result = await api.register({ email, password, username });
-        if (result.error) {
-          // Sanitize registration errors
-          const errorMsg = result.error.toLowerCase();
-          if (errorMsg.includes("already") || errorMsg.includes("registered")) {
-            setError("❌ This email is already registered. Please sign in instead.");
-          } else if (errorMsg.includes("invalid email")) {
-            setError("❌ Please enter a valid email address.");
-          } else if (errorMsg.includes("password")) {
-            setError("❌ Password must be at least 6 characters long.");
-          } else {
-            // Show generic error instead of backend details
-            setError("❌ Unable to create account. Please try again.");
-          }
-        } else if (result.message) {
-          setError("✅ Account created! Switching to sign in...");
-          // Reset and switch to login with smooth transition
-          setTimeout(() => {
-            setIsLogin(true);
-            setEmail("");
-            setPassword("");
-            setUsername("");
-            setError("");
-          }, 1200);
-        }
+        if (!username.trim()) { setError("Username is required."); setLoading(false); return; }
+        if (!email.includes("@") || !email.includes(".")) { setError("Enter a valid email address."); setLoading(false); return; }
+        if (password.length < 6) { setError("Password must be at least 6 characters."); setLoading(false); return; }
+        const users = getUsers();
+        if (users.find((u) => u.email === email)) { setError("Email already registered."); setLoading(false); return; }
+        users.push({ id: Date.now(), email, username, password });
+        localStorage.setItem("aeroverse_users", JSON.stringify(users));
+        api.register({ email, password, username }).catch(() => {});
+        setError("success");
+        setTimeout(() => { setIsLogin(true); setEmail(""); setPassword(""); setUsername(""); setError(""); }, 1500);
       }
-    } catch (err: any) {
-      console.error("Error:", err);
-      setError("❌ Connection error. Please check your internet and try again.");
+    } catch {
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0518] overflow-x-hidden">
-      <Navigation />
-      <div className="pt-32 px-6">
-        <div className="max-w-md mx-auto">
-          <Card className="bg-gradient-to-br from-purple-900/20 to-purple-800/10 border-purple-500/30 p-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              {isLogin ? "Sign In" : "Sign Up"}
-            </h1>
-            <p className="text-purple-200/70 mb-6">
-              {isLogin
-                ? "Sign in to your AeroVerse account"
-                : "Create an account to get started"}
-            </p>
+    <div className="min-h-screen bg-[#0a0518] flex items-center justify-center overflow-hidden relative">
 
-            <div className="space-y-4">
-              {!isLogin && (
-                <Input
+      {/* Ambient orbs — same as rest of site */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute rounded-full blur-3xl"
+          style={{ top: "-5%", left: "50%", transform: "translateX(-50%)", width: 700, height: 500, background: "radial-gradient(ellipse, rgba(139,92,246,0.22) 0%, transparent 70%)" }} />
+        <div className="absolute rounded-full blur-3xl"
+          style={{ bottom: "0%", left: "-10%", width: 500, height: 500, background: "radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%)" }} />
+        <div className="absolute rounded-full blur-3xl"
+          style={{ top: "20%", right: "-5%", width: 400, height: 400, background: "radial-gradient(ellipse, rgba(236,72,153,0.12) 0%, transparent 70%)" }} />
+        <div className="absolute rounded-full blur-3xl"
+          style={{ bottom: "10%", right: "10%", width: 350, height: 350, background: "radial-gradient(ellipse, rgba(6,182,212,0.10) 0%, transparent 70%)" }} />
+      </div>
+
+      {/* Stars */}
+      <div className="fixed inset-0 pointer-events-none">
+        {[...Array(70)].map((_, i) => (
+          <div key={i} className="absolute rounded-full bg-white" style={{
+            width: i % 8 === 0 ? 2 : 1,
+            height: i % 8 === 0 ? 2 : 1,
+            left: `${(i * 17 + 11) % 100}%`,
+            top: `${(i * 23 + 7) % 100}%`,
+            opacity: 0.1 + (i % 5) * 0.08,
+            animation: `twinkle ${2 + (i % 3)}s ease-in-out infinite`,
+            animationDelay: `${(i % 4) * 0.9}s`,
+          }} />
+        ))}
+      </div>
+
+      {/* Center form */}
+      <div className="relative z-10 w-full flex flex-col items-center px-6 py-16">
+
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2.5 mb-10 group">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #7c3aed, #db2777)" }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L8.5 8H4l4.5 4-2 7L12 16l5.5 3-2-7L20 8h-4.5L12 2z" fill="white" />
+            </svg>
+          </div>
+          <span className="text-white font-bold text-base tracking-tight group-hover:text-purple-200 transition-colors">
+            AeroVerse
+          </span>
+        </Link>
+
+        {/* Glass card */}
+        <div className="w-full max-w-sm rounded-2xl p-8"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            backdropFilter: "blur(24px)",
+            boxShadow: "0 25px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)"
+          }}>
+
+          {/* Heading */}
+          <h1 className="text-2xl font-bold text-white mb-1" style={{ letterSpacing: "-0.02em" }}>
+            {isLogin ? "Welcome back" : "Create account"}
+          </h1>
+          <p className="text-sm mb-7" style={{ color: "rgba(167,139,250,0.65)" }}>
+            {isLogin ? "Sign in to your AeroVerse account." : "Start your aerospace journey today."}
+          </p>
+
+          {/* Fields */}
+          <div className="flex flex-col gap-4">
+
+            {!isLogin && (
+              <div>
+                <label className="block text-xs font-medium mb-2 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  Full name
+                </label>
+                <input
                   type="text"
-                  placeholder="Full Name"
+                  placeholder="Your name"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="bg-purple-900/30 border-purple-500/30 text-white placeholder:text-purple-300/50"
+                  className="w-full rounded-xl text-white text-sm outline-none transition-all"
+                  style={{ padding: "10px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", boxSizing: "border-box" }}
+                  onFocus={e => (e.target.style.borderColor = "rgba(139,92,246,0.7)", e.target.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)")}
+                  onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.10)", e.target.style.boxShadow = "none")}
                 />
-              )}
-              <Input
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-medium mb-2 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+                Email
+              </label>
+              <input
                 type="email"
-                placeholder="Email"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                className="bg-purple-900/30 border-purple-500/30 text-white placeholder:text-purple-300/50"
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                className="w-full rounded-xl text-white text-sm outline-none transition-all"
+                style={{ padding: "10px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", boxSizing: "border-box" }}
+                onFocus={e => (e.target.style.borderColor = "rgba(139,92,246,0.7)", e.target.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)")}
+                onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.10)", e.target.style.boxShadow = "none")}
               />
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                className="bg-purple-900/30 border-purple-500/30 text-white placeholder:text-purple-300/50"
-              />
-
-              {error && (
-                <p className="text-sm text-center" style={{
-                  color: error.includes("✅") ? "#86efac" : "#f87171"
-                }}>
-                  {error}
-                </p>
-              )}
-
-              <Button
-                onClick={handleSubmit}
-                disabled={loading}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white rounded-xl mt-6"
-              >
-                {loading ? "Loading..." : (isLogin ? "Sign In" : "Sign Up")}
-              </Button>
             </div>
 
+            <div>
+              <label className="block text-xs font-medium mb-2 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="Min. 6 characters"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                className="w-full rounded-xl text-white text-sm outline-none transition-all"
+                style={{ padding: "10px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", boxSizing: "border-box" }}
+                onFocus={e => (e.target.style.borderColor = "rgba(139,92,246,0.7)", e.target.style.boxShadow = "0 0 0 3px rgba(139,92,246,0.12)")}
+                onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.10)", e.target.style.boxShadow = "none")}
+              />
+            </div>
+
+            {error && (
+              <div className="rounded-xl text-xs text-center py-3 px-4" style={
+                error === "success"
+                  ? { background: "rgba(16,185,129,0.10)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.25)" }
+                  : { background: "rgba(239,68,68,0.10)", color: "#fca5a5", border: "1px solid rgba(239,68,68,0.25)" }
+              }>
+                {error === "success" ? "Account created — redirecting..." : error}
+              </div>
+            )}
+
             <button
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setError("");
-                setEmail("");
-                setPassword("");
-                setUsername("");
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full rounded-xl font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all mt-1"
+              style={{
+                padding: "11px 0",
+                background: loading ? "rgba(124,58,237,0.4)" : "linear-gradient(135deg, #7c3aed 0%, #db2777 100%)",
+                border: "none",
+                cursor: loading ? "not-allowed" : "pointer",
+                boxShadow: loading ? "none" : "0 4px 20px rgba(124,58,237,0.35)",
               }}
-              className="w-full text-center text-purple-300 hover:text-purple-100 text-sm mt-4 transition-colors"
             >
-              {isLogin
-                ? "Don't have an account? Sign Up"
-                : "Already have an account? Sign In"}
+              {loading
+                ? <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                : isLogin ? "Sign in" : "Create account"
+              }
             </button>
-          </Card>
+          </div>
+
+          {/* Toggle */}
+          <p className="text-center mt-6 text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+            {isLogin ? "No account? " : "Already registered? "}
+            <button
+              onClick={() => { setIsLogin(!isLogin); setError(""); setEmail(""); setPassword(""); setUsername(""); }}
+              className="font-semibold transition-colors"
+              style={{ background: "none", border: "none", cursor: "pointer", color: "#a78bfa", padding: 0, fontSize: 12 }}
+            >
+              {isLogin ? "Sign up" : "Sign in"}
+            </button>
+          </p>
         </div>
+
+        {/* Back home */}
+        <Link to="/" className="mt-6 text-xs transition-colors"
+          style={{ color: "rgba(255,255,255,0.2)", textDecoration: "none" }}
+          onMouseEnter={e => (e.currentTarget.style.color = "rgba(167,139,250,0.7)")}
+          onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.2)")}
+        >
+          ← Back to home
+        </Link>
       </div>
+
+      <style>{`
+        @keyframes twinkle { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.4; } }
+        input::placeholder { color: rgba(255,255,255,0.2) !important; }
+      `}</style>
     </div>
   );
 }

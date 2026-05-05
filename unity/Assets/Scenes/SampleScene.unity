@@ -166,14 +166,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56068741}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 13
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 300
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
     m_Resolution: -1
@@ -218,7 +218,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -310,6 +310,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &129845938
 MeshFilter:
@@ -416,7 +417,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  - component: {fileID: 330585548}
+  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -495,8 +496,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1465921381}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
@@ -543,7 +543,7 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &330585548
+--- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -552,22 +552,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238da39286267fb4fa8c52dd77a3c621, type: 3}
+  m_Script: {fileID: 11500000, guid: de9f29d6f26b6374a93de8c07166ec0e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceFlight
-  swimSpeed: 50
-  sprintSpeed: 150
-  smoothTime: 0.15
-  inertia: 0.88
-  mouseSensitivity: 2
-  smoothLook: 10
-  normalFOV: 60
-  zoomedInFOV: 30
-  zoomedOutFOV: 120
-  zoomSpeed: 5
-  enableBobbing: 1
-  bobbingAmount: 0.2
-  bobbingSpeed: 3
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectClickDetector
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,14 +581,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -646,7 +633,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1129,6 +1116,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1074690891
 MeshFilter:
@@ -1350,63 +1338,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7969509491507432775, guid: a4e565586b2f040e0bba2202a8c92920, type: 3}
   m_PrefabInstance: {fileID: 996218052}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1465921380
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1465921381}
-  - component: {fileID: 1465921382}
-  m_Layer: 0
-  m_Name: SpaceFlight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1465921381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465921380}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8072, y: -8.9410305, z: 80.55265}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 330585546}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1465921382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465921380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238da39286267fb4fa8c52dd77a3c621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceFlight
-  swimSpeed: 25
-  sprintSpeed: 60
-  smoothTime: 0.15
-  inertia: 0.88
-  mouseSensitivity: 2
-  smoothLook: 10
-  normalFOV: 60
-  zoomedInFOV: 30
-  zoomedOutFOV: 120
-  zoomSpeed: 5
-  enableBobbing: 1
-  bobbingAmount: 0.2
-  bobbingSpeed: 3
 --- !u!4 &1543789287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7969509491507432775, guid: a4e565586b2f040e0bba2202a8c92920, type: 3}
@@ -1711,137 +1642,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 56068745}
   m_SourcePrefab: {fileID: 100100000, guid: 300f80108a63f48618cb4a1c8b8c1e86, type: 3}
---- !u!1001 &1933558567
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 42.18909
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -26.83433
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360166068394803097, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8307603157612568338, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      propertyPath: m_Name
-      value: Space Station
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5519181071239221409, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1933558571}
-    - targetCorrespondingSourceObject: {fileID: 6152831748648576681, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1933558570}
-  m_SourcePrefab: {fileID: 100100000, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
---- !u!1 &1933558568 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6152831748648576681, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-  m_PrefabInstance: {fileID: 1933558567}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1933558569 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5519181071239221409, guid: 0daf96c15d4c97b4e9e526f6acfce2f0, type: 3}
-  m_PrefabInstance: {fileID: 1933558567}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1933558570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933558568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_CustomShadowLayers: 0
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
---- !u!114 &1933558571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933558569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_CustomShadowLayers: 0
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1001 &2017831281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1929,4 +1729,3 @@ SceneRoots:
   - {fileID: 2017831281}
   - {fileID: 1640566059}
   - {fileID: 129845939}
-  - {fileID: 1933558567}

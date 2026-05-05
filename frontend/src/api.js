@@ -79,10 +79,12 @@ export const api = {
       body: JSON.stringify(data),
     }),
 
-  getSpacecrafts: () =>
-    fetchAPI("/spacecraft/", {
-      method: "GET",
-    }),
+  getSpacecrafts: async () => {
+    const result = await fetchAPI("/spacecraft/", { method: "GET" });
+    // Si erreur ou pas de données, retourne []
+    if (result.error || !Array.isArray(result)) return [];
+    return result;
+  },
 
   deleteSpacecraft: (id) =>
     fetchAPI(`/spacecraft/${id}`, {
@@ -90,10 +92,10 @@ export const api = {
     }),
 
   // ========== CHAT / TUTEUR IA ==========
-  sendMessage: (message) =>
+  sendMessage: (message, history = []) =>
     fetchAPI("/chat/", {
       method: "POST",
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, history }),
     }),
 
   getChatHistory: () =>
@@ -142,10 +144,66 @@ export const api = {
   isAuthenticated: () => !!localStorage.getItem("token"),
 
   getToken: () => localStorage.getItem("token"),
-  sendMessage: (message, history = []) =>
-    fetch("http://127.0.0.1:5000/api/chat/", {
+
+  // ========== ADMIN ==========
+  adminGetStats: () => fetchAPI("/admin/stats"),
+
+  adminGetUsers: () => fetchAPI("/admin/users"),
+
+  adminUpdateRole: (userId, role) =>
+    fetchAPI(`/admin/users/${userId}/role`, {
+      method: "PUT",
+      body: JSON.stringify({ role }),
+    }),
+
+  adminDeleteUser: (userId) =>
+    fetchAPI(`/admin/users/${userId}`, { method: "DELETE" }),
+
+  adminResetPassword: (userId, password) =>
+    fetchAPI(`/admin/users/${userId}/password`, {
+      method: "PUT",
+      body: JSON.stringify({ password }),
+    }),
+
+  adminGetBuilds: () => fetchAPI("/admin/builds"),
+
+  adminDeleteBuild: (buildId) =>
+    fetchAPI(`/admin/builds/${buildId}`, { method: "DELETE" }),
+
+  // ========== ADMIN - MODULES ==========
+  adminGetModules: () => fetchAPI("/admin/modules"),
+
+  adminCreateModule: (data) =>
+    fetchAPI("/admin/modules", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message, history }),
-    }).then((r) => r.json()),
+      body: JSON.stringify(data),
+    }),
+
+  adminUpdateModule: (moduleId, data) =>
+    fetchAPI(`/admin/modules/${moduleId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+
+  adminDeleteModule: (moduleId) =>
+    fetchAPI(`/admin/modules/${moduleId}`, { method: "DELETE" }),
+
+  // ========== ADMIN - LESSONS ==========
+  adminGetLessons: (moduleId) =>
+    fetchAPI(`/admin/modules/${moduleId}/lessons`),
+
+  adminCreateLesson: (moduleId, data) =>
+    fetchAPI(`/admin/modules/${moduleId}/lessons`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+  adminUpdateLesson: (lessonId, data) =>
+    fetchAPI(`/admin/lessons/${lessonId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+
+  adminDeleteLesson: (lessonId) =>
+    fetchAPI(`/admin/lessons/${lessonId}`, { method: "DELETE" }),
 };
