@@ -53,3 +53,17 @@ Thumbs.db
 *.env
 !*.env.example
 secrets/
+# ── Unity WebGL Builds (gros fichiers) ────
+frontend/public/unity_build_satellite/build/*.data
+frontend/public/unity_build_satellite/build/*.wasm
+frontend/public/unity-build/
+frontend/public/unity-build-2/
+# Mais gardez les loaders JS
+!frontend/public/unity_build_satellite/build/*.js
+
+# ── Fichiers temporaires ──────────────────
+frontend/.claude/
+*.sln
+*.slnx
+AeroVerseTestversionNNW.sln
+unity.slnx
