@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AeroVerse</title>
+    <script>
+      // GitHub Pages SPA redirect trick
+      // Store the full path in sessionStorage and redirect to index
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      sessionStorage.setItem('redirect', path + search + hash);
+      window.location.replace('/AeroVerse/');
+    </script>
+  </head>
+  <body></body>
+</html>
