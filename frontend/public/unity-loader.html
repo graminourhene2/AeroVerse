@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unity Satellite Builder</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0f172a;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #unity-container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #unity-canvas {
+      width: 100%;
+      height: 100%;
+      background: #1e293b;
+    }
+    #loading-cover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.5s;
+    }
+    #loading-cover.loaded {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(34, 211, 238, 0.2);
+      border-top-color: #22d3ee;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loading-text {
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+    .progress-bar {
+      width: 300px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 100%);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .progress-percent {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .error-message {
+      color: #ef4444;
+      text-align: center;
+      padding: 20px;
+      max-width: 500px;
+    }
+    .error-message h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .error-message p {
+      font-size: 14px;
+      color: #f87171;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="unity-container">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+  </div>
+
+  <div id="loading-cover">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading Satellite Builder...</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-percent" id="progress-percent">0%</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('unity-canvas');
+    const loadingCover = document.getElementById('loading-cover');
+    const progressFill = document.getElementById('progress-fill');
+    const progressPercent = document.getElementById('progress-percent');
+    const loadingText = document.querySelector('.loading-text');
+
+    const buildUrl = './unity_build_satellite/build';
+    
+    let unityInstance = null;
+
+    // Unity bridge functions
+    window.OnPartDetected = function(partName) {
+      console.log('[Unity→HTML] Part detected:', partName);
+      window.parent.postMessage({ 
+        type: 'PART_DETECTED', 
+        partName: partName 
+      }, '*');
+    };
+
+    window.OnBuildComplete = function(partsJson) {
+      console.log('[Unity→HTML] Build complete');
+      window.parent.postMessage({ 
+        type: 'BUILD_COMPLETE', 
+        parts: partsJson 
+      }, '*');
+    };
+
+    // Progress callback
+    function onProgress(progress) {
+      const percent = Math.round(progress * 100);
+      progressFill.style.width = percent + '%';
+      progressPercent.textContent = percent + '%';
+      console.log(`[Unity] Loading: ${percent}%`);
+    }
+
+    // Show error
+    function showError(message, detail) {
+      loadingCover.innerHTML = `
+        <div class="error-message">
+          <h2>❌ Failed to Load Unity</h2>
+          <p>${message}</p>
+          ${detail ? `<p style="margin-top: 10px; font-size: 12px; color: #fca5a5;">${detail}</p>` : ''}
+          <p style="margin-top: 20px; font-size: 12px; color: #94a3b8;">
+            Check console for details (F12)
+          </p>
+        </div>
+      `;
+    }
+
+    // Load Unity loader script
+    loadingText.textContent = 'Loading Unity Loader...';
+    console.log('[Unity] Loading loader script from:', `${buildUrl}/unity_build_satellite.loader.js`);
+
+    const loaderScript = document.createElement('script');
+    loaderScript.src = `${buildUrl}/unity_build_satellite.loader.js`;
+    
+    loaderScript.onload = function() {
+      console.log('[Unity] Loader script loaded');
+      loadingText.textContent = 'Initializing Unity...';
+
+      // Check if createUnityInstance exists
+      if (typeof window.createUnityInstance !== 'function') {
+        console.error('[Unity] createUnityInstance not found on window');
+        console.log('[Unity] Window properties:', Object.keys(window).filter(k => k.includes('Unity') || k.includes('unity')));
+        showError('Unity loader did not expose createUnityInstance', 'This might be a Unity WebGL build configuration issue');
+        return;
+      }
+
+      const config = {
+        dataUrl: `${buildUrl}/unity_build_satellite.data`,
+        frameworkUrl: `${buildUrl}/unity_build_satellite.framework.js`,
+        codeUrl: `${buildUrl}/unity_build_satellite.wasm`,
+        streamingAssetsUrl: 'StreamingAssets',
+        companyName: 'AeroVerse',
+        productName: 'Satellite Builder',
+        productVersion: '1.0',
+      };
+
+      console.log('[Unity] Creating instance with config:', config);
+
+      window.createUnityInstance(canvas, config, onProgress)
+        .then((instance) => {
+          console.log('[Unity] Instance created successfully');
+          unityInstance = instance;
+          
+          // Hide loading screen
+          setTimeout(() => {
+            loadingCover.classList.add('loaded');
+          }, 500);
+          
+          // Notify parent
+          window.parent.postMessage({ type: 'UNITY_READY' }, '*');
+        })
+        .catch((error) => {
+          console.error('[Unity] Error creating instance:', error);
+          showError('Unity instance creation failed', error.message);
+        });
+    };
+
+    loaderScript.onerror = function(error) {
+      console.error('[Unity] Error loading loader script:', error);
+      showError('Failed to load Unity loader script', 'Check that the build files exist in /unity_build_satellite/build/');
+    };
+
+    document.body.appendChild(loaderScript);
+
+    // Listen for reset command from parent
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'RESET_BUILD' && unityInstance) {
+        console.log('[Unity] Resetting build...');
+        unityInstance.SendMessage('BuilderPartDetector', 'ResetBuild');
+      }
+    });
+
+    // Expose SendMessage for parent
+    window.sendUnityMessage = function(objectName, methodName, value) {
+      if (unityInstance) {
+        unityInstance.SendMessage(objectName, methodName, value);
+      }
+    };
+  </script>
+</body>
+</html>
