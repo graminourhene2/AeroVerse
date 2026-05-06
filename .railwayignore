@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+unity/
+computer-vision/
+frontend/
+public/
+docs/
+*.h5
+*.pkl
+*.onnx
+.git/
