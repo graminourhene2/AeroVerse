@@ -16,6 +16,42 @@ export function AITutorNew() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const callGroqDirectly = async (userMessage: string, history: { role: string; content: string }[]) => {
+    const groqKey = import.meta.env.VITE_GROQ_API_KEY;
+    if (!groqKey) throw new Error("No Groq key");
+
+    const messages = [
+      {
+        role: "system",
+        content:
+          "Tu es AeroBot, un tuteur expert en aérospatiale pour la plateforme AeroVerse. " +
+          "Tu expliques les concepts de façon claire et pédagogique. " +
+          "Tu réponds en français si l'utilisateur écrit en français, en anglais sinon. " +
+          "Tu couvres : fusées, satellites, propulsion, orbites, aérodynamique, missions spatiales.",
+      },
+      ...history.slice(-10),
+      { role: "user", content: userMessage },
+    ];
+
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${groqKey}`,
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages,
+        max_tokens: 500,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Groq error ${response.status}`);
+    const data = await response.json();
+    return data.choices[0].message.content as string;
+  };
+
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -25,21 +61,26 @@ export function AITutorNew() {
     setInput("");
     setIsLoading(true);
 
+    const history = currentMessages
+      .filter(m => m.sender !== "bot" || m.id !== 1)
+      .map(m => ({ role: m.sender === "user" ? "user" : "assistant", content: m.text }));
+
     try {
-      const history = currentMessages
-        .filter(m => m.sender !== "bot" || m.id !== 1)
-        .map(m => ({ role: m.sender === "user" ? "user" : "assistant", content: m.text }));
-
-      const res = await api.sendMessage(userMessage, history);
-
-      if (res?.reply) {
-        setMessages(prev => [...prev, { id: prev.length + 1, text: res.reply, sender: "bot" }]);
-      } else {
-        const errorText = res?.error || "Unable to reach the AI tutor. Make sure the backend is running.";
-        setMessages(prev => [...prev, { id: prev.length + 1, text: errorText, sender: "bot" }]);
+      // Try Groq directly first (works without backend)
+      const reply = await callGroqDirectly(userMessage, history);
+      setMessages(prev => [...prev, { id: prev.length + 1, text: reply, sender: "bot" }]);
+    } catch {
+      // Fallback to backend if Groq direct call fails
+      try {
+        const res = await api.sendMessage(userMessage, history);
+        if (res?.reply) {
+          setMessages(prev => [...prev, { id: prev.length + 1, text: res.reply, sender: "bot" }]);
+        } else {
+          setMessages(prev => [...prev, { id: prev.length + 1, text: "The AI tutor is currently unavailable. Please try again later.", sender: "bot" }]);
+        }
+      } catch {
+        setMessages(prev => [...prev, { id: prev.length + 1, text: "The AI tutor is currently unavailable. Please try again later.", sender: "bot" }]);
       }
-    } catch (err) {
-      setMessages(prev => [...prev, { id: prev.length + 1, text: "Connection error. Please start the backend server.", sender: "bot" }]);
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,16 @@
-const BASE_URL = "http://127.0.0.1:5000/api";
+// Déterminer l'URL de base selon l'environnement
+const getBaseURL = () => {
+  // En production: utiliser l'URL du backend déployé
+  if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
+    return import.meta.env.VITE_API_URL || "https://your-backend-url.com/api";
+  }
+  // En développement local
+  return "http://127.0.0.1:5000/api";
+};
+
+const BASE_URL = getBaseURL();
+
+console.log("🔗 API Base URL:", BASE_URL);
 
 // Fonction utilitaire pour les requêtes
 const fetchAPI = async (endpoint, options = {}) => {

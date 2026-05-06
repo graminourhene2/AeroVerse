@@ -6,6 +6,7 @@ import { Authentication } from "./pages/Authentication";
 import { UserProfile } from "./pages/UserProfile";
 import { SpaceSimulationNew } from "./pages/SpaceSimulationNew";
 import { BuilderNew } from "./pages/BuilderNew";
+import { BuilderHub } from "./pages/BuilderHub";
 import { EducationNew } from "./pages/EducationNew";
 import { AITutorNew } from "./pages/AITutorNew";
 import { Administration } from "./pages/Administration";
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
   { path: "/about",       Component: About },
   { path: "/authentication", Component: Authentication },
   { path: "/auth",        Component: Authentication },
-  
+
   // Public education & AI tutor — no authentication needed
   { path: "/education",   Component: EducationNew },
   { path: "/ai-tutor",    Component: AITutorNew },
@@ -33,8 +34,9 @@ export const router = createBrowserRouter([
   { path: "/admin",       Component: protect(Administration) },
   { path: "/profile",     Component: protect(UserProfile) },
   { path: "/simulation",  Component: protect(SpaceSimulationNew) },
-  { path: "/builder",     Component: protect(BuilderNew) },
+  { path: "/builder",          Component: protect(BuilderHub) },
+  { path: "/builder/:type",    Component: protect(BuilderNew) },
 
   // 404
   { path: "*", Component: NotFound },
-]);
+], { basename: import.meta.env.BASE_URL });

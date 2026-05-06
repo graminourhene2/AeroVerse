@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AeroVerse Platform</title>
+    <script>
+      // Restore redirected path from GitHub Pages 404 trick
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect) {
+          sessionStorage.removeItem('redirect');
+          var base = '/AeroVerse';
+          var path = redirect.startsWith(base) ? redirect.slice(base.length) : redirect;
+          if (path && path !== '/') {
+            window.history.replaceState(null, '', base + (path.startsWith('/') ? path : '/' + path));
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

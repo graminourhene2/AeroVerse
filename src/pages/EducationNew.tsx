@@ -1,6 +1,6 @@
 import { Navigation } from "../Navigation";
 import { useState, useEffect } from "react";
-import { CheckCircle2, Award, Brain, Play, X, BookOpen } from "lucide-react";
+import { CheckCircle2, Award, Brain, Play, X, BookOpen, FileText, Download, GraduationCap, ScrollText } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { api } from "../api";
@@ -34,6 +34,154 @@ interface Module {
   duration: string;
   lessons: Lesson[];
 }
+
+interface Doc {
+  id: number;
+  title: string;
+  type: "PDF" | "Course" | "Paper";
+  source: string;
+  description: string;
+  url: string;
+}
+
+const DOCS: Record<number, Doc[]> = {
+  1: [
+    {
+      id: 1,
+      title: "Fundamentals of Orbital Mechanics",
+      type: "PDF",
+      source: "NASA",
+      description: "Introduction to Keplerian orbits, orbital elements, and trajectory planning for space missions.",
+      url: "/docs/module1/orbital-mechanics.pdf",
+    },
+    {
+      id: 2,
+      title: "Astrodynamics — Lecture Notes",
+      type: "Course",
+      source: "MIT",
+      description: "Full lecture notes and problem sets from MIT's 16.346 Astrodynamics course.",
+      url: "/docs/module1/astrodynamics-notes.pdf",
+    },
+    {
+      id: 3,
+      title: "ISS Technical Description",
+      type: "PDF",
+      source: "NASA",
+      description: "Official NASA document describing the International Space Station systems and orbital parameters.",
+      url: "/docs/module1/iss-technical.pdf",
+    },
+    {
+      id: 4,
+      title: "Rocket Propulsion Elements",
+      type: "Paper",
+      source: "NASA NTRS",
+      description: "Key chapters covering thrust, specific impulse, and engine cycles from the classic Sutton & Biblarz reference.",
+      url: "/docs/module1/rocket-propulsion.pdf",
+    },
+  ],
+  2: [
+    {
+      id: 1,
+      title: "Lunar Mission Design Handbook",
+      type: "PDF",
+      source: "NASA",
+      description: "Trajectory design and mission planning for Earth–Moon transfers including Hohmann and free-return trajectories.",
+      url: "/docs/module2/lunar-mission.pdf",
+    },
+    {
+      id: 2,
+      title: "Artemis Program Overview",
+      type: "PDF",
+      source: "NASA",
+      description: "Official NASA Artemis architecture document covering SLS, Orion, and Gateway planning.",
+      url: "/docs/module2/artemis-overview.pdf",
+    },
+    {
+      id: 3,
+      title: "Interplanetary Mission Design",
+      type: "Course",
+      source: "JPL / Caltech",
+      description: "Course material on designing missions to the Moon, Mars and beyond using gravity assists.",
+      url: "/docs/module2/interplanetary-design.pdf",
+    },
+    {
+      id: 4,
+      title: "Microgravity Science — ESA Overview",
+      type: "Paper",
+      source: "ESA",
+      description: "European Space Agency paper on the effects of microgravity on human physiology and materials science.",
+      url: "/docs/module2/microgravity-esa.pdf",
+    },
+  ],
+  3: [
+    {
+      id: 1,
+      title: "Spacecraft Systems Engineering",
+      type: "PDF",
+      source: "ESA",
+      description: "Comprehensive guide to satellite bus design: power, thermal, attitude control, and communications.",
+      url: "/docs/module3/spacecraft-systems.pdf",
+    },
+    {
+      id: 2,
+      title: "SpaceX Raptor Engine — Technical Brief",
+      type: "Paper",
+      source: "SpaceX",
+      description: "Published overview of the Raptor full-flow staged combustion engine architecture and performance data.",
+      url: "/docs/module3/raptor-engine.pdf",
+    },
+    {
+      id: 3,
+      title: "Satellite Thermal Control Handbook",
+      type: "PDF",
+      source: "NASA JPL",
+      description: "JPL handbook covering passive and active thermal control techniques for Earth-orbiting spacecraft.",
+      url: "/docs/module3/thermal-control.pdf",
+    },
+    {
+      id: 4,
+      title: "Small Satellite Design — Course Notes",
+      type: "Course",
+      source: "MIT",
+      description: "Course notes on CubeSat and small satellite design from concept to launch.",
+      url: "/docs/module3/small-satellite.pdf",
+    },
+  ],
+  4: [
+    {
+      id: 1,
+      title: "Interplanetary Navigation — Deep Space",
+      type: "PDF",
+      source: "NASA JPL",
+      description: "JPL technical report on autonomous navigation, optical nav, and radiometric tracking for deep space missions.",
+      url: "/docs/module4/deep-space-nav.pdf",
+    },
+    {
+      id: 2,
+      title: "Hohmann Transfers & Orbital Maneuvers",
+      type: "Paper",
+      source: "NASA NTRS",
+      description: "In-depth paper on fuel-optimal orbital transfers, bi-elliptic transfers, and plane changes.",
+      url: "/docs/module4/hohmann-transfers.pdf",
+    },
+    {
+      id: 3,
+      title: "Black Holes & Extreme Gravity",
+      type: "Paper",
+      source: "Research",
+      description: "Accessible review paper on stellar-mass and supermassive black holes, event horizons, and observational evidence.",
+      url: "/docs/module4/black-holes.pdf",
+    },
+    {
+      id: 4,
+      title: "The Future of Human Spaceflight",
+      type: "PDF",
+      source: "NASA",
+      description: "NASA's strategic vision document for long-duration exploration, Moon to Mars architecture and beyond.",
+      url: "/docs/module4/nasa-vision.pdf",
+    },
+  ],
+};
 
 // ── Real educational aerospace videos (YouTube IDs verified) ──────────────────
 const MODULES: Module[] = [
@@ -130,11 +278,11 @@ export function EducationNew() {
   const [selectedModule, setSelectedModule] = useState<Module>(MODULES[0]);
   const [selectedLesson, setSelectedLesson] = useState<Lesson>(MODULES[0].lessons[0]);
   const [progress, setProgress] = useState<Record<number, ProgressItem>>({});
-  const [loading, setLoading] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizScore, setQuizScore] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<"videos" | "docs">("videos");
 
   useEffect(() => {
     if (api.isAuthenticated()) {
@@ -163,6 +311,7 @@ export function EducationNew() {
     setShowQuiz(false);
     setQuizScore(null);
     setQuizAnswers({});
+    setActiveTab("videos");
   };
 
   const submitQuiz = async () => {
@@ -262,72 +411,167 @@ export function EducationNew() {
             <div className="lg:col-span-3 space-y-5">
               {!showQuiz ? (
                 <>
-                  {/* Video Player */}
-                  <Card className="overflow-hidden rounded-2xl border-2 border-purple-400/30 bg-gradient-to-br from-purple-900/40 to-blue-900/40">
-                    <div className="aspect-video w-full bg-black">
-                      <iframe
-                        key={selectedLesson.videoId}
-                        className="w-full h-full"
-                        src={`https://www.youtube-nocookie.com/embed/${selectedLesson.videoId}?rel=0&modestbranding=1`}
-                        title={selectedLesson.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
+                  {/* Tab switcher */}
+                  <div className="flex gap-2 mb-2">
+                    <button
+                      onClick={() => setActiveTab("videos")}
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all ${
+                        activeTab === "videos"
+                          ? "bg-purple-600/40 border-purple-400/60 text-white"
+                          : "bg-purple-900/20 border-purple-400/20 text-purple-300/60 hover:border-purple-400/40 hover:text-purple-200"
+                      }`}
+                    >
+                      <Play className="w-4 h-4" />
+                      Videos
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("docs")}
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all ${
+                        activeTab === "docs"
+                          ? "bg-blue-600/40 border-blue-400/60 text-white"
+                          : "bg-purple-900/20 border-purple-400/20 text-purple-300/60 hover:border-purple-400/40 hover:text-purple-200"
+                      }`}
+                    >
+                      <ScrollText className="w-4 h-4" />
+                      Documentation
+                      <span className="ml-1 px-1.5 py-0.5 rounded-md bg-blue-500/20 text-blue-300 text-xs">
+                        {(DOCS[selectedModule.id] || []).length}
+                      </span>
+                    </button>
+                  </div>
 
-                    <div className="p-5">
-                      <div className="flex items-start justify-between gap-4 mb-4">
-                        <div>
-                          <h2 className="text-xl font-bold text-white mb-1">{selectedLesson.title}</h2>
-                          <p className="text-purple-300/70 text-sm">{selectedLesson.description}</p>
+                  {activeTab === "videos" ? (
+                    /* ── VIDEO PLAYER ── */
+                    <Card className="overflow-hidden rounded-2xl border-2 border-purple-400/30 bg-gradient-to-br from-purple-900/40 to-blue-900/40">
+                      <div className="aspect-video w-full bg-black">
+                        <iframe
+                          key={selectedLesson.videoId}
+                          className="w-full h-full"
+                          src={`https://www.youtube.com/embed/${selectedLesson.videoId}?rel=0&modestbranding=1`}
+                          title={selectedLesson.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                      </div>
+
+                      <div className="p-5">
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                          <div>
+                            <h2 className="text-xl font-bold text-white mb-1">{selectedLesson.title}</h2>
+                            <p className="text-purple-300/70 text-sm">{selectedLesson.description}</p>
+                          </div>
+                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border flex-shrink-0 ${getDifficultyColor(selectedModule.level)}`}>
+                            {selectedModule.level}
+                          </span>
                         </div>
-                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold border flex-shrink-0 ${getDifficultyColor(selectedModule.level)}`}>
-                          {selectedModule.level}
+
+                        {/* Lesson list */}
+                        <div className="border-t border-purple-400/20 pt-4">
+                          <p className="text-xs text-purple-300/50 uppercase tracking-wider font-semibold mb-3">
+                            {selectedModule.title} — {selectedModule.lessons.length} videos
+                          </p>
+                          <div className="space-y-2">
+                            {selectedModule.lessons.map((lesson, idx) => (
+                              <button
+                                key={lesson.id}
+                                onClick={() => setSelectedLesson(lesson)}
+                                className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left ${
+                                  selectedLesson.id === lesson.id
+                                    ? "bg-purple-600/30 border border-purple-400/50"
+                                    : "bg-purple-500/10 border border-purple-400/10 hover:bg-purple-500/20"
+                                }`}
+                              >
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                                  selectedLesson.id === lesson.id ? "bg-purple-500" : "bg-purple-900/50"
+                                }`}>
+                                  {selectedLesson.id === lesson.id
+                                    ? <Play className="w-4 h-4 text-white ml-0.5" />
+                                    : <span className="text-xs text-purple-300 font-bold">{idx + 1}</span>
+                                  }
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium text-white truncate">{lesson.title}</p>
+                                  <p className="text-xs text-purple-300/60 truncate">{lesson.description}</p>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <Button
+                          onClick={() => { setShowQuiz(true); setQuizAnswers({}); setQuizScore(null); }}
+                          className="w-full mt-5 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-semibold rounded-xl"
+                        >
+                          <Brain className="w-4 h-4 mr-2" />
+                          Take Module Quiz
+                        </Button>
+                      </div>
+                    </Card>
+                  ) : (
+                    /* ── DOCUMENTATION ── */
+                    <Card className="rounded-2xl border-2 border-blue-400/30 bg-gradient-to-br from-blue-900/30 to-purple-900/30 p-6">
+                      <div className="flex items-center gap-3 mb-6">
+                        <GraduationCap className="w-5 h-5 text-blue-300" />
+                        <h3 className="text-lg font-bold text-white">
+                          {selectedModule.title} — Resources
+                        </h3>
+                        <span className="ml-auto text-xs text-blue-300/60">
+                          {(DOCS[selectedModule.id] || []).length} documents
                         </span>
                       </div>
 
-                      {/* Lesson list */}
-                      <div className="border-t border-purple-400/20 pt-4">
-                        <p className="text-xs text-purple-300/50 uppercase tracking-wider font-semibold mb-3">
-                          {selectedModule.title} — {selectedModule.lessons.length} videos
-                        </p>
-                        <div className="space-y-2">
-                          {selectedModule.lessons.map((lesson, idx) => (
-                            <button
-                              key={lesson.id}
-                              onClick={() => setSelectedLesson(lesson)}
-                              className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left ${
-                                selectedLesson.id === lesson.id
-                                  ? "bg-purple-600/30 border border-purple-400/50"
-                                  : "bg-purple-500/10 border border-purple-400/10 hover:bg-purple-500/20"
-                              }`}
+                      <div className="space-y-4">
+                        {(DOCS[selectedModule.id] || []).map((doc) => {
+                          const typeStyle =
+                            doc.type === "PDF"
+                              ? { badge: "bg-red-500/20 border-red-400/30 text-red-300", icon: <FileText className="w-5 h-5 text-red-300" /> }
+                              : doc.type === "Course"
+                              ? { badge: "bg-green-500/20 border-green-400/30 text-green-300", icon: <GraduationCap className="w-5 h-5 text-green-300" /> }
+                              : { badge: "bg-yellow-500/20 border-yellow-400/30 text-yellow-300", icon: <ScrollText className="w-5 h-5 text-yellow-300" /> };
+
+                          return (
+                            <div
+                              key={doc.id}
+                              className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-400/30 transition-all"
                             >
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                                selectedLesson.id === lesson.id ? "bg-purple-500" : "bg-purple-900/50"
-                              }`}>
-                                {selectedLesson.id === lesson.id
-                                  ? <Play className="w-4 h-4 text-white ml-0.5" />
-                                  : <span className="text-xs text-purple-300 font-bold">{idx + 1}</span>
-                                }
+                              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mt-0.5">
+                                {typeStyle.icon}
                               </div>
+
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-white truncate">{lesson.title}</p>
-                                <p className="text-xs text-purple-300/60 truncate">{lesson.description}</p>
+                                <div className="flex items-center gap-2 flex-wrap mb-1">
+                                  <span className={`px-2 py-0.5 rounded text-xs font-bold border ${typeStyle.badge}`}>
+                                    {doc.type}
+                                  </span>
+                                  <span className="text-xs text-purple-300/50">{doc.source}</span>
+                                </div>
+                                <p className="text-sm font-semibold text-white mb-1">{doc.title}</p>
+                                <p className="text-xs text-purple-300/60 leading-relaxed">{doc.description}</p>
                               </div>
-                            </button>
-                          ))}
-                        </div>
+
+                              <a
+                                href={doc.url}
+                                download
+                                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 border border-blue-400/30 text-blue-200 text-xs font-medium transition-all"
+                              >
+                                <Download className="w-3.5 h-3.5" />
+                                Download
+                              </a>
+                            </div>
+                          );
+                        })}
                       </div>
 
                       <Button
                         onClick={() => { setShowQuiz(true); setQuizAnswers({}); setQuizScore(null); }}
-                        className="w-full mt-5 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-semibold rounded-xl"
+                        className="w-full mt-6 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-semibold rounded-xl"
                       >
                         <Brain className="w-4 h-4 mr-2" />
                         Take Module Quiz
                       </Button>
-                    </div>
-                  </Card>
+                    </Card>
+                  )}
 
                   {/* Module grid */}
                   <div>
