@@ -54,6 +54,26 @@ interface Stats {
 
 type Tab = "overview" | "users" | "builds" | "modules" | "lessons";
 
+const LOCAL_MODULES: Module[] = [
+  { id: 1, title: "Space Orbits & Mechanics",      description: "Learn about orbital mechanics, escape velocity, and the ISS.", level: "Beginner",     duration: "2h",   image_url: "", lessons_count: 5 },
+  { id: 2, title: "Moon & Deep Space Missions",    description: "Explore lunar missions, fuel types, and deep space navigation.", level: "Intermediate", duration: "2.5h", image_url: "", lessons_count: 5 },
+  { id: 3, title: "Satellite & Spacecraft Systems",description: "Understand satellite systems, attitude control, and propulsion.", level: "Intermediate", duration: "3h",   image_url: "", lessons_count: 5 },
+  { id: 4, title: "Advanced Space Navigation",     description: "Master orbital transfers, SpaceX missions, and interplanetary travel.", level: "Advanced", duration: "3.5h", image_url: "", lessons_count: 5 },
+];
+
+function getLocalUsers(): AdminUser[] {
+  const raw = JSON.parse(localStorage.getItem("aeroverse_users") || "[]");
+  return raw.map((u: { id: number; email: string; username: string; role?: string }) => ({
+    id: u.id,
+    email: u.email,
+    username: u.username,
+    role: u.role || "student",
+    created_at: null,
+    builds_count: 0,
+    progress_count: 0,
+  }));
+}
+
 export function Administration() {
   const [tab, setTab] = useState<Tab>("overview");
   const [stats, setStats] = useState<Stats | null>(null);
@@ -96,11 +116,24 @@ export function Administration() {
         api.adminGetModules(),
       ]);
       if (statsRes && !statsRes.error) setStats(statsRes);
-      if (Array.isArray(usersRes)) setUsers(usersRes);
+      if (Array.isArray(usersRes) && usersRes.length > 0) {
+        setUsers(usersRes);
+      } else {
+        setUsers(getLocalUsers());
+      }
       if (Array.isArray(buildsRes)) setBuilds(buildsRes);
-      if (Array.isArray(modulesRes)) setModules(modulesRes);
+      if (Array.isArray(modulesRes) && modulesRes.length > 0) {
+        setModules(modulesRes);
+      } else {
+        setModules(LOCAL_MODULES);
+      }
+      if (!Array.isArray(usersRes) || !Array.isArray(modulesRes)) {
+        setError("Backend offline — showing local data.");
+      }
     } catch {
-      setError("Backend offline — some data may be unavailable.");
+      setUsers(getLocalUsers());
+      setModules(LOCAL_MODULES);
+      setError("Backend offline — showing local data.");
     } finally {
       setLoading(false);
     }
@@ -204,12 +237,6 @@ export function Administration() {
       </div>
     );
   }
-
-  const tabs: { id: Tab; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: "overview", label: "Overview",   Icon: BarChart3 },
-    { id: "users",    label: `Users (${users.length})`,    Icon: Users },
-    { id: "builds",   label: `Builds (${builds.length})`, Icon: Rocket },
-  ];
 
   return (
     <div className="min-h-screen bg-[#0a0518] overflow-x-hidden">
