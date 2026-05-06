@@ -37,15 +37,15 @@ export function Authentication() {
         const user = users.find((u) => u.email === email && u.password === password);
         const isAdminCredentials = email === "admin@admin.com" && password === "admin123";
 
-        if (!user) {
+        if (isAdminCredentials) {
+          localStorage.setItem("token", `local_${Date.now()}`);
+          localStorage.setItem("user", JSON.stringify({ id: 0, email: "admin@admin.com", username: "Admin", role: "admin" }));
+          setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
+        } else if (!user) {
           const result = await api.login({ email, password }).catch(() => ({ error: "offline" }));
           if (result?.token) {
             localStorage.setItem("token", result.token);
             localStorage.setItem("user", JSON.stringify(result.user));
-            setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
-          } else if (isAdminCredentials) {
-            localStorage.setItem("token", `local_${Date.now()}`);
-            localStorage.setItem("user", JSON.stringify({ id: 0, email: "admin@admin.com", username: "Admin", role: "admin" }));
             setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
           } else {
             setError("Incorrect email or password.");
