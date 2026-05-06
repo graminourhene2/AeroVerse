@@ -25,7 +25,7 @@ export function Authentication() {
     if (params.get("mode") === "signup") setIsLogin(false);
   }, [location]);
 
-  const getUsers = (): { id: number; email: string; username: string; password: string }[] =>
+  const getUsers = (): { id: number; email: string; username: string; password: string; role?: string }[] =>
     JSON.parse(localStorage.getItem("aeroverse_users") || "[]");
 
   const handleSubmit = async () => {
@@ -40,7 +40,7 @@ export function Authentication() {
         if (isAdminCredentials) {
           localStorage.setItem("token", `local_${Date.now()}`);
           localStorage.setItem("user", JSON.stringify({ id: 0, email: "admin@admin.com", username: "Admin", role: "admin" }));
-          setTimeout(() => { window.location.href = getRedirectPath(); }, 300);
+          setTimeout(() => { window.location.href = "/"; }, 300);
         } else if (!user) {
           const result = await api.login({ email, password }).catch(() => ({ error: "offline" }));
           if (result?.token) {

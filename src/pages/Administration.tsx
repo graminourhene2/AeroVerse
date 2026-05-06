@@ -127,13 +127,9 @@ export function Administration() {
       } else {
         setModules(LOCAL_MODULES);
       }
-      if (!Array.isArray(usersRes) || !Array.isArray(modulesRes)) {
-        setError("Backend offline — showing local data.");
-      }
     } catch {
       setUsers(getLocalUsers());
       setModules(LOCAL_MODULES);
-      setError("Backend offline — showing local data.");
     } finally {
       setLoading(false);
     }
